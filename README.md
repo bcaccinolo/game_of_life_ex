@@ -3,13 +3,22 @@
 ## TODO
 
 - ✅create the module implementing the Game Of Life logic
-- 🔥I want a Genserver running and able to take an environment and x & y.
+- ✅the GenServer keeps a simple state of the cell.
+- ✅the GenServer is able to take an environment and x & y
+    - to calculate the new state for the cell
+    - update the new state
 
-- the state will be a tuple of tuple (2 dimensions)
+- the state of one cell will be the GenSenver containing as a state the value of the cell
+
+- the Board state will be a double tuple containing GenServers.
   the elements in the state will be accessed with: `elem(elem(state, 1), 1)`
-  the elems will be {value(0 or 1), GenServer pid}
+  this state is stored in an Agent.
+
+- 🔥create the Agent building and storing the state.
+
 - create the agent keeping the state
   from (1,1) it returns a matrix 3x3, the environment
+
 - create the GenServer in charge of managing one cell
 
 ## Installation
