@@ -8,15 +8,14 @@
     - to calculate the new state for the cell
     - update the new state
 
-- the state of one cell will be the GenSenver containing as a state the value of the cell
+- 📝the state of one cell will be the GenSenver containing as a state the value of the cell
 
-- the Board state will be a double tuple containing GenServers.
+- 📝the Board state will be a double tuple containing GenServers.
   the elements in the state will be accessed with: `elem(elem(state, 1), 1)`
   this state is stored in an Agent.
 
-- 🔥create the Agent building and storing the state.
-
-- create the agent keeping the state
+- ✅create state builder.
+- 🔥create the agent keeping the state
   from (1,1) it returns a matrix 3x3, the environment
 
 - create the GenServer in charge of managing one cell
