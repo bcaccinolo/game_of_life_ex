@@ -2,8 +2,8 @@
 
 ## TODO
 
-- create the module implementing the Game Of Life logic
-- the state will be a tuple of tuple (2 dimensions)
+- ✅create the module implementing the Game Of Life logic
+- 🔥the state will be a tupleg of tuple (2 dimensions)
   the elements in the state will be accessed with: `elem(elem(state, 1), 1)`
   the elems will be {value(0 or 1), GenServer pid}
 - create the agent keeping the state
