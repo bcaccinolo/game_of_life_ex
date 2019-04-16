@@ -34,8 +34,12 @@ defmodule GameOfLife2.StateBuilder do
   @doc """
   Generate a random state to start the game of life.
   """
-  def generate_random_state(x_len, y_len) do
+  def random_state(x_len, y_len)
+  def random_state(0, _y_len) , do: []
+  def random_state(x_len, y_len) , do: [random_list(y_len)] ++ random_state(x_len - 1, y_len)
 
-  end
+  def random_list(len)
+  def random_list(0)   , do:  []
+  def random_list(len) , do:  [:rand.uniform(2) - 1] ++ random_list(len - 1)
 
 end

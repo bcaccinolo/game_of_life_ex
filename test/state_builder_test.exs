@@ -24,4 +24,14 @@ defmodule StateBuilderTest do
     assert is_tuple(res)
   end
 
+  test "random_list" do
+    res = GameOfLife2.StateBuilder.random_list(3)
+    assert length(res) == 3
+  end
+
+  test "random_state" do
+    res = GameOfLife2.StateBuilder.random_state(5,5)
+    IO.puts List.to_tuple(res)
+  end
+
 end

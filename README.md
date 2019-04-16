@@ -10,7 +10,8 @@
 - ✅create the agent keeping the state
     from (1,1) it returns a matrix 3x3, the environment
 - ✅the Agent can update the board state. This should be useless normaly.
-
+- 🔥randomly generate a state
+- iterate over the state to generate
 
 # NOTES
 
