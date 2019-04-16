@@ -11,17 +11,17 @@ defmodule StateAgentTest do
     |> GameOfLife2.StateBuilder.build_state
     |> GameOfLife2.StateAgent.start_link
 
-    res = GameOfLife2.StateAgent.cell_and_environment(0, 1)
+    {res, _pid} = GameOfLife2.StateAgent.cell_and_environment(0, 1)
     assert res == {{0, 0, 0},
                    {1, 0, 0},
                    {1, 1, 0}}
 
-    res = GameOfLife2.StateAgent.cell_and_environment(1, 1)
+    {res, _pid} = GameOfLife2.StateAgent.cell_and_environment(1, 1)
     assert res == {{1, 0, 0},
                    {1, 1, 0},
                    {1, 0, 0}}
 
-    res = GameOfLife2.StateAgent.cell_and_environment(2, 1)
+    {res, _pid} = GameOfLife2.StateAgent.cell_and_environment(2, 1)
     assert res == {{1, 1, 0},
                    {1, 0, 0},
                    {0, 0, 0}}
@@ -36,7 +36,7 @@ defmodule StateAgentTest do
 
     GameOfLife2.StateAgent.update_cell(0, 1, 1)
 
-    res = GameOfLife2.StateAgent.cell_and_environment(1, 1)
+    {res, _pid} = GameOfLife2.StateAgent.cell_and_environment(1, 1)
     assert res == {{1, 1, 0},
                    {1, 1, 0},
                    {1, 0, 0}}

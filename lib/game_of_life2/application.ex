@@ -18,15 +18,13 @@ defmodule GameOfLife2.Application do
     Supervisor.start_link(children, opts)
   end
 
-
   def launch() do
-    # create the board
-    [[1, 0, 0],
-     [1, 1, 0],
-     [1, 0, 0]]
+    GameOfLife2.StateBuilder.random_state(5, 5)
     |> GameOfLife2.StateBuilder.build_state
     |> GameOfLife2.StateAgent.start_link
+    board = GameOfLife2.StateAgent.state
 
+    IO.puts(board)
   end
 
 end

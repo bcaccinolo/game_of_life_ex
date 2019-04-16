@@ -31,7 +31,7 @@ defmodule StateBuilderTest do
 
   test "random_state" do
     res = GameOfLife2.StateBuilder.random_state(5,5)
-    IO.puts List.to_tuple(res)
+    assert length(res) == 5
   end
 
 end

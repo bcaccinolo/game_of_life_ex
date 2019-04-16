@@ -6,6 +6,13 @@ defmodule GameOfLife2.StateAgent do
   end
 
   @doc """
+  Return the all state.
+  """
+  def state do
+    Agent.get(__MODULE__, fn state -> state end)
+  end
+
+  @doc """
   Get the cell state and the environment of the cell. Meaning the cell around it.
   Example:
           {{1, 0, 1},
@@ -18,10 +25,14 @@ defmodule GameOfLife2.StateAgent do
     x_len = board |> elem(0) |> Tuple.to_list |> length
 
     {
+    {
       { extact(board, x_len, y_len, x - 1, y - 1), extact(board, x_len, y_len, x - 1, y ), extact(board, x_len, y_len, x + 1, y + 1) },
       { extact(board, x_len, y_len, x, y - 1), extact(board, x_len, y_len, x, y), extact(board, x_len, y_len, x + 1, y + 1) },
       { extact(board, x_len, y_len, x + 1, y - 1), extact(board, x_len, y_len, x + 1, y), extact(board, x_len, y_len, x + 1, y + 1) }
+    },
+    elem(elem(board, x), y)
     }
+
   end
 
   @doc """
@@ -32,8 +43,8 @@ defmodule GameOfLife2.StateAgent do
   def extact(_board, x_length, _y_length, x, _y)  when x >= x_length , do: 0
   def extact(_board, _x_length, y_length, _x, y)  when y >= y_length , do: 0
   def extact(board, _x_length, _y_length, x, y) do
-    cell_server = elem(elem(board, x), y)
-    GameOfLife2.GolServer.state(cell_server)
+    elem(elem(board, x), y)
+    |> GameOfLife2.GolServer.state
   end
 
   @doc """
