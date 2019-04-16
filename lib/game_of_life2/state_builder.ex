@@ -30,4 +30,12 @@ defmodule GameOfLife2.StateBuilder do
   """
   def build_state_from_value(v) do GameOfLife2.GolServer.start_link(v) end
 
+
+  @doc """
+  Generate a random state to start the game of life.
+  """
+  def generate_random_state(x_len, y_len) do
+
+  end
+
 end
