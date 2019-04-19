@@ -19,32 +19,29 @@ defmodule GameOfLife2.Application do
   end
 
   def launch() do
-    GameOfLife2.StateBuilder.random_state(10, 20)
+    GameOfLife2.StateBuilder.random_state(30, 50)
     |> GameOfLife2.StateBuilder.build_state
     |> GameOfLife2.StateAgent.start_link
 
     board = GameOfLife2.StateAgent.state
-    x_len = board |> Tuple.to_list |> length
-    y_len = board |> elem(0) |> Tuple.to_list |> length
-
-    # IO.puts("x is #{x_len}")
-    # IO.puts("y is #{y_len}")
+    line_count = board |> Tuple.to_list |> length
+    col_count = board |> elem(0) |> Tuple.to_list |> length
 
     ExNcurses.initscr()
 
-    loop(x_len, y_len)
+    loop(line_count, col_count)
   end
 
-  def loop(x_len, y_len) do
+  def loop(line_count, col_count) do
 
-    for x <- 0..(x_len - 1), y <- 0..(y_len - 1) do
-      {env, pid} = GameOfLife2.StateAgent.cell_and_environment(x,y)
+    for line <- 0..(line_count - 1), col <- 0..(col_count - 1) do
+      {env, pid} = GameOfLife2.StateAgent.cell_and_environment(line, col)
       GameOfLife2.GolServer.calculate(pid, env)
     end
 
     GameOfLife2.StateAgent.disp
-    Process.sleep(200)
-    loop(x_len, y_len)
+    Process.sleep(100)
+    loop(line_count, col_count)
   end
 
 end

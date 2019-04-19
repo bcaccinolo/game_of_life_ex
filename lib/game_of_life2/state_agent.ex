@@ -19,18 +19,18 @@ defmodule GameOfLife2.StateAgent do
            {1, 1, 1},
            {1, 0, 1}}
   """
-  def cell_and_environment(x, y) do
+  def cell_and_environment(line, col) do
     board = Agent.get(__MODULE__, fn state -> state end)
-    x_len = board |> Tuple.to_list |> length
-    y_len = board |> elem(0) |> Tuple.to_list |> length
+    line_count = board |> Tuple.to_list |> length
+    col_count = board |> elem(0) |> Tuple.to_list |> length
 
     {
       {
-        { extact(board, x_len, y_len, x - 1, y - 1), extact(board, x_len, y_len, x - 1, y ), extact(board, x_len, y_len, x - 1, y + 1) },
-        { extact(board, x_len, y_len, x, y - 1), extact(board, x_len, y_len, x, y), extact(board, x_len, y_len, x, y + 1) },
-        { extact(board, x_len, y_len, x + 1, y - 1), extact(board, x_len, y_len, x + 1, y), extact(board, x_len, y_len, x + 1, y + 1) }
+        { extact(board, line_count, col_count, line - 1, col - 1), extact(board, line_count, col_count, line - 1, col ), extact(board, line_count, col_count, line - 1, col + 1) },
+        { extact(board, line_count, col_count, line, col - 1), extact(board, line_count, col_count, line, col), extact(board, line_count, col_count, line, col + 1) },
+        { extact(board, line_count, col_count, line + 1, col - 1), extact(board, line_count, col_count, line + 1, col), extact(board, line_count, col_count, line + 1, col + 1) }
       },
-      elem(elem(board, x), y)
+      elem(elem(board, line), col)
     }
 
   end
@@ -38,12 +38,12 @@ defmodule GameOfLife2.StateAgent do
   @doc """
   Extract just one cell value from the board
   """
-  def extact(_board, _x_length, _y_length, x, _y) when x < 0 , do: 0
-  def extact(_board, _x_length, _y_length, _x, y) when y < 0 , do: 0
-  def extact(_board, x_length, _y_length, x, _y)  when x >= x_length , do: 0
-  def extact(_board, _x_length, y_length, _x, y)  when y >= y_length , do: 0
-  def extact(board, x_length, y_length, x, y) do
-    elem(elem(board, x), y)
+  def extact(_board, _line_count, _col_count, line, _col) when line < 0 , do: 0
+  def extact(_board, _line_count, _col_count, _line, col) when col < 0 , do: 0
+  def extact(_board, line_count, _col_count, line, _col)  when line >= line_count , do: 0
+  def extact(_board, _line_count, col_count, _line, col)  when col >= col_count , do: 0
+  def extact(board, _line_count, _col_count, line, col) do
+    elem(elem(board, line), col)
     |> GameOfLife2.GolServer.state
   end
 
@@ -51,12 +51,12 @@ defmodule GameOfLife2.StateAgent do
   Update one cell
 
   Params
-  x, y : coordinates of the cell in the board
+  line, col : coordinates of the cell in the board
   cell : the value of the cell (0 or 1)
   """
-  def update_cell(x, y, cell) do
+  def update_cell(line, col, cell) do
     board = Agent.get(__MODULE__, fn state -> state end)
-    cell_server = elem(elem(board, x), y)
+    cell_server = elem(elem(board, line), col)
     GameOfLife2.GolServer.update(cell_server, cell)
   end
 
@@ -64,17 +64,18 @@ defmodule GameOfLife2.StateAgent do
   Display the board
   """
   def disp do
-    ExNcurses.clear()
-
     board = Agent.get(__MODULE__, fn state -> state end)
-    y_len = board |> Tuple.to_list |> length
-    x_len = board |> elem(0) |> Tuple.to_list |> length
+    line_count = board |> Tuple.to_list |> length
+    col_count = board |> elem(0) |> Tuple.to_list |> length
 
-    for x <- 0..(x_len - 1), y <- 0..(y_len - 1) do
-      cell = elem(elem(board, x), y) |> GameOfLife2.GolServer.state
+    ExNcurses.mvaddstr(50, 30, "x is #{line_count}")
+    ExNcurses.mvaddstr(51, 30, "y is #{col_count}")
+
+    for line <- 0..(line_count - 1), col <- 0..(col_count - 1) do
+      cell = elem(elem(board, line), col) |> GameOfLife2.GolServer.state
       case cell do
-        0 -> ExNcurses.mvaddstr(x, y, "-" )
-        1 -> ExNcurses.mvaddstr(x, y, "|" )
+        0 -> ExNcurses.mvaddstr(line, col, "-" )
+        1 -> ExNcurses.mvaddstr(line, col, "|" )
       end
     end
 

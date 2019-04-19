@@ -21,8 +21,8 @@ defmodule GameOfLife2.GolServer do
   @doc """
   Do the game of life calculation for the cell and it stores the result in the state.
   """
-  def calculate(pid, environment, x \\ 1, y \\ 1) do
-    GenServer.call(pid, {:calculate, environment, x, y})
+  def calculate(pid, environment, line \\ 1, col \\ 1) do
+    GenServer.call(pid, {:calculate, environment, line, col})
   end
 
   # Server
@@ -34,8 +34,8 @@ defmodule GameOfLife2.GolServer do
     {:reply, state, state}
   end
 
-  def handle_call({:calculate, environment, x, y}, _from, _state) do
-    result = GameOfLife2.Gol.live_or_let_die(environment, x, y)
+  def handle_call({:calculate, environment, line, col}, _from, _state) do
+    result = GameOfLife2.Gol.live_or_let_die(environment, line, col)
     {:reply, result, result}
   end
 

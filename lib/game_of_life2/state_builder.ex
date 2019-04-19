@@ -33,9 +33,9 @@ defmodule GameOfLife2.StateBuilder do
   @doc """
   Generate a random state to start the game of life.
   """
-  def random_state(x_len, y_len)
-  def random_state(0, _y_len) , do: []
-  def random_state(x_len, y_len) , do: [random_list(y_len)] ++ random_state(x_len - 1, y_len)
+  def random_state(line_count, col_count)
+  def random_state(0, _col_count) , do: []
+  def random_state(line_count, col_count) , do: [random_list(col_count)] ++ random_state(line_count - 1, col_count)
 
   def random_list(len)
   def random_list(0)   , do:  []

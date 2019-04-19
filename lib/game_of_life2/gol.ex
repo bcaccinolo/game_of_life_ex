@@ -31,12 +31,12 @@ defmodule GameOfLife2.Gol do
                            {1, 0}}
                   if the cell is in a corner.
 
-    - x & y: the coordinates of the cell to evaluate in regard of its environment.
+    - line & col: the coordinates of the cell to evaluate in regard of its environment.
 
   Returns the value of the cell.
   """
-  def live_or_let_die(environment, x, y) do
-    calculate(neighbours(environment, x, y), elem(elem(environment, x), y))
+  def live_or_let_die(environment, line, col) do
+    calculate(neighbours(environment, line, col), elem(elem(environment, line), col))
   end
 
   @doc """
@@ -45,20 +45,20 @@ defmodule GameOfLife2.Gol do
   """
   def calculate(n, _) when n == 3 , do: 1
   def calculate(n, v) when n == 2 , do: v
-  def calculate(n, _) when n > 3 , do: 0
-  def calculate(n, _) when n < 2 , do: 0
+  def calculate(n, _) when n > 3  , do: 0
+  def calculate(n, _) when n < 2  , do: 0
 
   @doc """
   Calculate the amount of living cells around the observed point.
 
   ## Params
     - environment: a tuple of 3 tuples containing the value of the cell and the one around.
-    - x & y: the coordinates of the cell to evaluate in regard of its environment.
+    - col, line: the coordinates of the cell to evaluate in regard of its environment.
 
   Returns the value of the cell.
   """
-  def neighbours(environment, x, y) do
-    sumMatrix(environment) - elem(elem(environment, x), y)
+  def neighbours(environment, line, col) do
+    sumMatrix(environment) - elem(elem(environment, line), col)
   end
 
   @doc """
