@@ -1,5 +1,10 @@
 # GameOfLife2
 
+## Run
+
+mix ; mix run -e "GameOfLife2.Application.launch"
+
+
 ## TODO
 - ✅create the module implementing the Game Of Life logic
 - ✅the GenServer keeps a simple state of the cell.

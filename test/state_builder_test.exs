@@ -30,8 +30,8 @@ defmodule StateBuilderTest do
   end
 
   test "random_state" do
-    res = GameOfLife2.StateBuilder.random_state(5,5)
-    assert length(res) == 5
+    res = GameOfLife2.StateBuilder.random_state(50,25)
+    assert length(res) == 50
   end
 
 end

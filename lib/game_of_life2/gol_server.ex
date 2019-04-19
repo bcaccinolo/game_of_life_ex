@@ -10,7 +10,6 @@ defmodule GameOfLife2.GolServer do
   end
 
   # Client
-
   def state(pid) do
     GenServer.call(pid, :state)
   end
@@ -19,7 +18,10 @@ defmodule GameOfLife2.GolServer do
     GenServer.cast(pid, {:update, state})
   end
 
-  def calculate(pid, environment, x, y) do
+  @doc """
+  Do the game of life calculation for the cell and it stores the result in the state.
+  """
+  def calculate(pid, environment, x \\ 1, y \\ 1) do
     GenServer.call(pid, {:calculate, environment, x, y})
   end
 
