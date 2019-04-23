@@ -5,6 +5,8 @@
 mix ; mix run -e "GameOfLife2.Application.launch"
 
 ## TODO
+### Current problem
+
 - ✅create the module implementing the Game Of Life logic
 - ✅the GenServer keeps a simple state of the cell.
 - ✅the GenServer is able to take an environment and x & y
@@ -16,7 +18,8 @@ mix ; mix run -e "GameOfLife2.Application.launch"
 - ✅the Agent can update the board state. This should be useless normaly.
 - ✅randomly generate a state
 - ✅iterate over the state to display the state
-- 🔥validate the coordinate of the matrix are consistently used.
+- ✅validate the coordinate of the matrix are consistently used.
+- ✅problem when the dimensions are too big
 
 # NOTES
 

@@ -81,14 +81,17 @@ defmodule StateAgentTest do
                    {1, 0, 0}}
   end
 
-  test "disp" do
+  test "build_line" do
     [[1, 0, 0],
     [1, 1, 0],
     [1, 0, 0]]
    |> GameOfLife2.StateBuilder.build_state
    |> GameOfLife2.StateAgent.start_link
 
-   GameOfLife2.StateAgent.disp
+   state = GameOfLife2.StateAgent.state
+   state_line = elem(state, 1)
+   res = GameOfLife2.StateAgent.build_line(state_line, 3)
+   assert res == "++."
   end
 
 end

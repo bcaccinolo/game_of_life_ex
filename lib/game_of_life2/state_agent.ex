@@ -68,34 +68,31 @@ defmodule GameOfLife2.StateAgent do
     line_count = board |> Tuple.to_list |> length
     col_count = board |> elem(0) |> Tuple.to_list |> length
 
-    ExNcurses.mvaddstr(50, 30, "x is #{line_count}")
-    ExNcurses.mvaddstr(51, 30, "y is #{col_count}")
+    # ExNcurses.mvaddstr(50, 30, "x is #{line_count}")
+    # ExNcurses.mvaddstr(51, 30, "y is #{col_count}")
 
-    for line <- 0..(line_count - 1), col <- 0..(col_count - 1) do
-      cell = elem(elem(board, line), col) |> GameOfLife2.GolServer.state
-      case cell do
-        0 -> ExNcurses.mvaddstr(line, col, "-" )
-        1 -> ExNcurses.mvaddstr(line, col, "|" )
-      end
+    for line <- 0..(line_count - 1) do
+      ll = build_line(elem(board, line), col_count)
+      ExNcurses.mvprintw(line, 0, ll)
+      ExNcurses.refresh()
     end
-
-    ExNcurses.refresh()
   end
 
-  def disp_board([h]) do
-    Tuple.to_list(h) |> disp_list
-  end
-  def disp_board([h | t]) do
-    Tuple.to_list(h) |> disp_list
-    disp_board(t)
-  end
-
-  def disp_list([h]) do
-    # GameOfLife2.GolServer.state(h) |> ExNcurses.mvaddstr(0, 2, "Snake")
-  end
-  def disp_list([h | t]) do
-    # GameOfLife2.GolServer.state(h) |> ExNcurses.printw
-    disp_list(t)
+  @doc """
+  Build a line to display from the board.
+  Example:
+    {1,1,0} => "++."
+  """
+  def build_line(board_line, col_count)
+  def build_line(_board_line, 0) , do: ""
+  def build_line(board_line, col_count) do
+    cell = elem(board_line, col_count - 1)
+           |> GameOfLife2.GolServer.state
+           |> case do
+             0 -> "."
+             1 -> "+"
+           end
+    "#{build_line(board_line, col_count - 1)}#{cell}"
   end
 
 end

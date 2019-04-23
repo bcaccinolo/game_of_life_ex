@@ -19,7 +19,7 @@ defmodule GameOfLife2.Application do
   end
 
   def launch() do
-    GameOfLife2.StateBuilder.random_state(30, 50)
+    GameOfLife2.StateBuilder.random_state(35, 130)
     |> GameOfLife2.StateBuilder.build_state
     |> GameOfLife2.StateAgent.start_link
 
@@ -28,6 +28,7 @@ defmodule GameOfLife2.Application do
     col_count = board |> elem(0) |> Tuple.to_list |> length
 
     ExNcurses.initscr()
+    ExNcurses.curs_set(0) # no cursor
 
     loop(line_count, col_count)
   end
@@ -40,7 +41,7 @@ defmodule GameOfLife2.Application do
     end
 
     GameOfLife2.StateAgent.disp
-    Process.sleep(100)
+    Process.sleep(200)
     loop(line_count, col_count)
   end
 
