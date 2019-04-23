@@ -19,7 +19,30 @@ defmodule GameOfLife2.Application do
   end
 
   def launch() do
+
+    # Random Board
     GameOfLife2.StateBuilder.random_state(35, 130)
+
+    # Block
+    # [[0, 0, 0, 0],
+    #  [0, 1, 1, 0],
+    #  [0, 1, 1, 0],
+    #  [0, 0, 0, 0]]
+
+    # Rotative
+    # [[0, 0, 0, 0, 0],
+    #  [0, 0, 1, 0, 0],
+    #  [0, 0, 1, 0, 0],
+    #  [0, 0, 1, 0, 0],
+    #  [0, 0, 0, 0, 0]]
+
+    # Glider
+    # [[0, 0, 0, 0, 0],
+    #  [0, 1, 0, 0, 0],
+    #  [0, 0, 1, 0, 0],
+    #  [1, 1, 1, 0, 0],
+    #  [0, 0, 0, 0, 0]]
+
     |> GameOfLife2.StateBuilder.build_state
     |> GameOfLife2.StateAgent.start_link
 
