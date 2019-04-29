@@ -6,18 +6,18 @@ defmodule GameOfLife2.StateAgent do
   end
 
   @doc """
-  Return the all state.
+  Return the complete state.
   """
   def state do
     Agent.get(__MODULE__, fn state -> state end)
   end
 
   @doc """
-  Get the cell state and the environment of the cell. Meaning the cell around it.
+  Get the state and the environment of the cell present at line and col.
   Example:
-          {{1, 0, 1},
-           {1, 1, 1},
-           {1, 0, 1}}
+    (3, 8) -> {{1, 0, 1},
+               {1, 1, 1},
+               {1, 0, 1}}
   """
   def cell_and_environment(line, col) do
     board = Agent.get(__MODULE__, fn state -> state end)
@@ -27,12 +27,11 @@ defmodule GameOfLife2.StateAgent do
     {
       {
         { extact(board, line_count, col_count, line - 1, col - 1), extact(board, line_count, col_count, line - 1, col ), extact(board, line_count, col_count, line - 1, col + 1) },
-        { extact(board, line_count, col_count, line, col - 1), extact(board, line_count, col_count, line, col), extact(board, line_count, col_count, line, col + 1) },
-        { extact(board, line_count, col_count, line + 1, col - 1), extact(board, line_count, col_count, line + 1, col), extact(board, line_count, col_count, line + 1, col + 1) }
+        { extact(board, line_count, col_count, line, col - 1)    , extact(board, line_count, col_count, line, col)     , extact(board, line_count, col_count, line, col + 1) },
+        { extact(board, line_count, col_count, line + 1, col - 1), extact(board, line_count, col_count, line + 1, col) , extact(board, line_count, col_count, line + 1, col + 1) }
       },
       elem(elem(board, line), col)
     }
-
   end
 
   @doc """
@@ -48,16 +47,35 @@ defmodule GameOfLife2.StateAgent do
   end
 
   @doc """
+  Build a 'cell_and_environment' list.
+  It's done this way cause Elixir likes to manage list instead of Matrix.
+  """
+  def cell_and_env_list(line, col)
+  def cell_and_env_list(0, col) , do: cell_and_env_line_list(0, col)
+  def cell_and_env_list(line, col) do
+    cell_and_env_line_list(line, col) ++ cell_and_env_list(line - 1, col)
+  end
+
+  @doc """
+  Build a 'cell_and_environment' list just for one line of the matrix.
+  """
+  def cell_and_env_line_list(line, col)
+  def cell_and_env_line_list(line, 0) , do: [GameOfLife2.StateAgent.cell_and_environment(line, 0)]
+  def cell_and_env_line_list(line, col) do
+    [GameOfLife2.StateAgent.cell_and_environment(line, col) | cell_and_env_line_list(line, col - 1)]
+  end
+
+  @doc """
   Update one cell
 
   Params
   line, col : coordinates of the cell in the board
-  cell : the value of the cell (0 or 1)
+  new_state : the value of the cell (0 or 1)
   """
-  def update_cell(line, col, cell) do
+  def update_cell(line, col, new_cell) do
     board = Agent.get(__MODULE__, fn state -> state end)
     cell_server = elem(elem(board, line), col)
-    GameOfLife2.GolServer.update(cell_server, cell)
+    GameOfLife2.GolServer.update(cell_server, new_cell)
   end
 
   @doc """
@@ -68,12 +86,11 @@ defmodule GameOfLife2.StateAgent do
     line_count = board |> Tuple.to_list |> length
     col_count = board |> elem(0) |> Tuple.to_list |> length
 
-    # ExNcurses.mvaddstr(50, 30, "x is #{line_count}")
-    # ExNcurses.mvaddstr(51, 30, "y is #{col_count}")
+    ExNcurses.mvaddstr(line_count , 0, "Lines: #{line_count + 1} Cols: #{col_count + 1} GenServers: #{line_count * col_count}")
 
     for line <- 0..(line_count - 1) do
-      ll = build_line(elem(board, line), col_count)
-      ExNcurses.mvprintw(line, 0, ll)
+      cells_line = build_line(elem(board, line), col_count)
+      ExNcurses.mvprintw(line, 0, cells_line)
       ExNcurses.refresh()
     end
   end

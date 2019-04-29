@@ -20,6 +20,7 @@ mix ; mix run -e "GameOfLife2.Application.launch"
 - ✅iterate over the state to display the state
 - ✅validate the coordinate of the matrix are consistently used.
 - ✅problem when the dimensions are too big
+- 🎉 It works !!! 🍾
 
 # NOTES
 

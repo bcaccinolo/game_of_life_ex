@@ -66,6 +66,36 @@ defmodule StateAgentTest do
                    {0, 0, 0}}
   end
 
+  test "cell_and_env_line_list" do
+    [[1, 0, 0, 1],
+     [1, 1, 0, 1],
+     [1, 0, 0, 1]]
+    |> GameOfLife2.StateBuilder.build_state
+    |> GameOfLife2.StateAgent.start_link
+
+    board = GameOfLife2.StateAgent.state
+    line_count = board |> Tuple.to_list |> length
+    col_count = board |> elem(0) |> Tuple.to_list |> length
+
+    res = GameOfLife2.StateAgent.cell_and_env_line_list(line_count - 1, col_count - 1)
+    assert length(res) == 4
+  end
+
+  test "cell_and_env_list" do
+    [[1, 0, 0, 1],
+     [1, 1, 0, 1],
+     [1, 0, 0, 1]]
+    |> GameOfLife2.StateBuilder.build_state
+    |> GameOfLife2.StateAgent.start_link
+
+    board = GameOfLife2.StateAgent.state
+    line_count = board |> Tuple.to_list |> length
+    col_count = board |> elem(0) |> Tuple.to_list |> length
+
+    res = GameOfLife2.StateAgent.cell_and_env_list(line_count - 1, col_count - 1)
+    assert length(res) == 12
+  end
+
   test "update_cell" do
     [[1, 0, 0],
      [1, 1, 0],

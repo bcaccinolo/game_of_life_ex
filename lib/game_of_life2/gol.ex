@@ -22,11 +22,11 @@ defmodule GameOfLife2.Gol do
                  example: {{1, 0, 1},
                            {1, 1, 1},
                            {1, 0, 1}}
-                  it can also be :
+                 it can also be :
                  example: {{1, 0},
                            {1, 1},
                            {1, 0}}
-                  if the cell is on the border. Or even:
+                 if the cell is on the border. Or even:
                  example: {{1, 0},
                            {1, 0}}
                   if the cell is in a corner.
