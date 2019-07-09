@@ -3,6 +3,9 @@
   <p>A productive web framework that<br/>does not compromise speed or maintainability.</p>
 </section>
 
+<div id="messages"></div>
+<input id="chat-input" type="text"></input>
+
 <section class="row">
   <article class="column">
     <h2>Resources</h2>

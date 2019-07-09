@@ -9,7 +9,7 @@ defmodule PhxGameOfLife.Application do
     # List all child processes to be supervised
     children = [
       # Start the Ecto repository
-      PhxGameOfLife.Repo,
+      # PhxGameOfLife.Repo,
       # Start the endpoint when the application starts
       PhxGameOfLifeWeb.Endpoint
       # Starts a worker by calling: PhxGameOfLife.Worker.start_link(arg)
