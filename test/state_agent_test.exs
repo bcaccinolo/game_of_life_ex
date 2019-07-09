@@ -13,8 +13,8 @@ defmodule StateAgentTest do
     |> GameOfLife2.StateAgent.start_link
 
     board = GameOfLife2.StateAgent.state
-    assert GameOfLife2.StateAgent.extact(board, 3, 4, 0, 3) == 1
-    assert GameOfLife2.StateAgent.extact(board, 3, 4, 2, 3) == 6
+    assert GameOfLife2.StateAgent.extract(board, 3, 4, 0, 3) == 1
+    assert GameOfLife2.StateAgent.extract(board, 3, 4, 2, 3) == 6
   end
 
   test "cell_and_environment" do

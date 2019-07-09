@@ -26,9 +26,9 @@ defmodule GameOfLife2.StateAgent do
 
     {
       {
-        { extact(board, line_count, col_count, line - 1, col - 1), extact(board, line_count, col_count, line - 1, col ), extact(board, line_count, col_count, line - 1, col + 1) },
-        { extact(board, line_count, col_count, line, col - 1)    , extact(board, line_count, col_count, line, col)     , extact(board, line_count, col_count, line, col + 1) },
-        { extact(board, line_count, col_count, line + 1, col - 1), extact(board, line_count, col_count, line + 1, col) , extact(board, line_count, col_count, line + 1, col + 1) }
+        { extract(board, line_count, col_count, line - 1, col - 1), extract(board, line_count, col_count, line - 1, col ), extract(board, line_count, col_count, line - 1, col + 1) },
+        { extract(board, line_count, col_count, line, col - 1)    , extract(board, line_count, col_count, line, col)     , extract(board, line_count, col_count, line, col + 1) },
+        { extract(board, line_count, col_count, line + 1, col - 1), extract(board, line_count, col_count, line + 1, col) , extract(board, line_count, col_count, line + 1, col + 1) }
       },
       elem(elem(board, line), col)
     }
@@ -37,11 +37,11 @@ defmodule GameOfLife2.StateAgent do
   @doc """
   Extract just one cell value from the board
   """
-  def extact(_board, _line_count, _col_count, line, _col) when line < 0 , do: 0
-  def extact(_board, _line_count, _col_count, _line, col) when col < 0 , do: 0
-  def extact(_board, line_count, _col_count, line, _col)  when line >= line_count , do: 0
-  def extact(_board, _line_count, col_count, _line, col)  when col >= col_count , do: 0
-  def extact(board, _line_count, _col_count, line, col) do
+  def extract(_board, _line_count, _col_count, line, _col) when line < 0 , do: 0
+  def extract(_board, _line_count, _col_count, _line, col) when col < 0 , do: 0
+  def extract(_board, line_count, _col_count, line, _col)  when line >= line_count , do: 0
+  def extract(_board, _line_count, col_count, _line, col)  when col >= col_count , do: 0
+  def extract(board, _line_count, _col_count, line, col) do
     elem(elem(board, line), col)
     |> GameOfLife2.GolServer.state
   end
