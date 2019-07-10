@@ -1,11 +1,7 @@
-<section class="row">
+<section >
 
   <input id="chat-input" type="text"></input>
 
-
-  <div id="react-app" data-gol="...+++"></div>
-
-  <br/>
-  <div id="messages"></div>
+  <div id="react-app"/>
 
 </section>
