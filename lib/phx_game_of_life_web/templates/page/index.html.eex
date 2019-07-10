@@ -2,7 +2,13 @@
 
   <input id="chat-input" type="text"></input>
 
+
+  <div id="react-app"></div>
+
   <br/>
   <div id="messages"></div>
+
+
+
 
 </section>
