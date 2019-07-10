@@ -1,4 +1,4 @@
-# GameOfLife2
+# GameOfLifeCore
 
  PhxGameOfLife
 
@@ -27,7 +27,7 @@ Ready to run in production? Please [check our deployment guides](https://hexdocs
 
 ## Run
 
-mix ; mix run -e "GameOfLife2.Application.launch"
+mix ; mix run -e "GameOfLifeCore.Application.launch"
 
 ## TODO
 ### Current problem
