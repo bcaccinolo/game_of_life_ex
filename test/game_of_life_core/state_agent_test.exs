@@ -122,4 +122,16 @@ defmodule StateAgentTest do
    assert res == "++."
   end
 
+  test "disp" do
+    [[1, 0, 0],
+    [1, 1, 0],
+    [1, 0, 0]]
+   |> GameOfLifeCore.StateBuilder.build_state
+   |> GameOfLifeCore.StateAgent.start_link
+
+   expected =  "\n+..\n++.\n+.."
+   res = GameOfLifeCore.StateAgent.disp
+   assert res == expected
+  end
+
 end

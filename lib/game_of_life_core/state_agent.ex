@@ -21,14 +21,20 @@ defmodule GameOfLifeCore.StateAgent do
   """
   def cell_and_environment(line, col) do
     board = Agent.get(__MODULE__, fn state -> state end)
-    line_count = board |> Tuple.to_list |> length
-    col_count = board |> elem(0) |> Tuple.to_list |> length
+    line_count = board |> Tuple.to_list() |> length
+    col_count = board |> elem(0) |> Tuple.to_list() |> length
 
     {
       {
-        { extract(board, line_count, col_count, line - 1, col - 1), extract(board, line_count, col_count, line - 1, col ), extract(board, line_count, col_count, line - 1, col + 1) },
-        { extract(board, line_count, col_count, line, col - 1)    , extract(board, line_count, col_count, line, col)     , extract(board, line_count, col_count, line, col + 1) },
-        { extract(board, line_count, col_count, line + 1, col - 1), extract(board, line_count, col_count, line + 1, col) , extract(board, line_count, col_count, line + 1, col + 1) }
+        {extract(board, line_count, col_count, line - 1, col - 1),
+         extract(board, line_count, col_count, line - 1, col),
+         extract(board, line_count, col_count, line - 1, col + 1)},
+        {extract(board, line_count, col_count, line, col - 1),
+         extract(board, line_count, col_count, line, col),
+         extract(board, line_count, col_count, line, col + 1)},
+        {extract(board, line_count, col_count, line + 1, col - 1),
+         extract(board, line_count, col_count, line + 1, col),
+         extract(board, line_count, col_count, line + 1, col + 1)}
       },
       elem(elem(board, line), col)
     }
@@ -37,13 +43,14 @@ defmodule GameOfLifeCore.StateAgent do
   @doc """
   Extract just one cell value from the board
   """
-  def extract(_board, _line_count, _col_count, line, _col) when line < 0 , do: 0
-  def extract(_board, _line_count, _col_count, _line, col) when col < 0 , do: 0
-  def extract(_board, line_count, _col_count, line, _col)  when line >= line_count , do: 0
-  def extract(_board, _line_count, col_count, _line, col)  when col >= col_count , do: 0
+  def extract(_board, _line_count, _col_count, line, _col) when line < 0, do: 0
+  def extract(_board, _line_count, _col_count, _line, col) when col < 0, do: 0
+  def extract(_board, line_count, _col_count, line, _col) when line >= line_count, do: 0
+  def extract(_board, _line_count, col_count, _line, col) when col >= col_count, do: 0
+
   def extract(board, _line_count, _col_count, line, col) do
     elem(elem(board, line), col)
-    |> GameOfLifeCore.GolServer.state
+    |> GameOfLifeCore.GolServer.state()
   end
 
   @doc """
@@ -51,7 +58,8 @@ defmodule GameOfLifeCore.StateAgent do
   It's done this way cause Elixir likes to manage list instead of Matrix.
   """
   def cell_and_env_list(line, col)
-  def cell_and_env_list(0, col) , do: cell_and_env_line_list(0, col)
+  def cell_and_env_list(0, col), do: cell_and_env_line_list(0, col)
+
   def cell_and_env_list(line, col) do
     cell_and_env_line_list(line, col) ++ cell_and_env_list(line - 1, col)
   end
@@ -60,9 +68,15 @@ defmodule GameOfLifeCore.StateAgent do
   Build a 'cell_and_environment' list just for one line of the matrix.
   """
   def cell_and_env_line_list(line, col)
-  def cell_and_env_line_list(line, 0) , do: [GameOfLifeCore.StateAgent.cell_and_environment(line, 0)]
+
+  def cell_and_env_line_list(line, 0),
+    do: [GameOfLifeCore.StateAgent.cell_and_environment(line, 0)]
+
   def cell_and_env_line_list(line, col) do
-    [GameOfLifeCore.StateAgent.cell_and_environment(line, col) | cell_and_env_line_list(line, col - 1)]
+    [
+      GameOfLifeCore.StateAgent.cell_and_environment(line, col)
+      | cell_and_env_line_list(line, col - 1)
+    ]
   end
 
   @doc """
@@ -83,16 +97,11 @@ defmodule GameOfLifeCore.StateAgent do
   """
   def disp do
     board = Agent.get(__MODULE__, fn state -> state end)
-    line_count = board |> Tuple.to_list |> length
-    col_count = board |> elem(0) |> Tuple.to_list |> length
+    line_count = board |> Tuple.to_list() |> length
+    col_count = board |> elem(0) |> Tuple.to_list() |> length
 
-    ExNcurses.mvaddstr(line_count , 0, "Lines: #{line_count + 1} Cols: #{col_count + 1} GenServers: #{line_count * col_count}")
-
-    for line <- 0..(line_count - 1) do
-      cells_line = build_line(elem(board, line), col_count)
-      ExNcurses.mvprintw(line, 0, cells_line)
-      ExNcurses.refresh()
-    end
+    0..(line_count - 1)
+    |> Enum.reduce("", fn line, acc -> "#{acc}\n#{build_line(elem(board, line), col_count)}" end)
   end
 
   @doc """
@@ -101,15 +110,16 @@ defmodule GameOfLifeCore.StateAgent do
     {1,1,0} => "++."
   """
   def build_line(board_line, col_count)
-  def build_line(_board_line, 0) , do: ""
+  def build_line(_board_line, 0), do: ""
   def build_line(board_line, col_count) do
-    cell = elem(board_line, col_count - 1)
-           |> GameOfLifeCore.GolServer.state
-           |> case do
-             0 -> "."
-             1 -> "+"
-           end
+    cell =
+      elem(board_line, col_count - 1)
+      |> GameOfLifeCore.GolServer.state()
+      |> case do
+        0 -> "."
+        1 -> "+"
+      end
+
     "#{build_line(board_line, col_count - 1)}#{cell}"
   end
-
 end

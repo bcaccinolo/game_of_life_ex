@@ -26,9 +26,6 @@ defmodule GameOfLifeCore.Application do
     cols = ExNcurses.cols
     ExNcurses.curs_set(0) # no cursor
 
-    # Random Board
-    GameOfLifeCore.StateBuilder.random_state(lines - 1, cols - 1)
-
     # Block
     # [[0, 0, 0, 0],
     #  [0, 1, 1, 0],
@@ -70,6 +67,8 @@ defmodule GameOfLifeCore.Application do
     #  [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
     #  [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0]]
 
+    # Random Board
+    GameOfLifeCore.StateBuilder.random_state(lines - 1, cols - 1)
     |> GameOfLifeCore.StateBuilder.build_state
     |> GameOfLifeCore.StateAgent.start_link
 
