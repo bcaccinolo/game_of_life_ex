@@ -3,25 +3,33 @@ import {Socket} from "phoenix"
 
 class Case extends React.Component {
   render() {
-
-    var style = {backgroundColor: 'green'}
-    if (this.props.data === '.') {
-      style = {backgroundColor: 'blue'}
+    var style = {
+      backgroundColor: 'black',
+      border: '1px solid gray',
+      width: '10px',
+      height: '10px'
     }
+    if (this.props.data === '.') { style['backgroundColor'] = 'white' }
 
-    return <td style={style} >{this.props.data}</td>
+    return <div class="case" style={style} ></div>
   }
 }
 
 class Line extends React.Component {
   render() {
+
+    const style = {
+      // border: '1px solid red',
+      display: 'flex'
+    }
+
     const elems = Array.from(this.props.data)
 
     const items = elems.map((el, index) =>
       <Case key={index} data={el} />
     )
 
-    return <tr>{items}</tr>
+    return <div class="line" style={style} >{items}</div>
   }
 }
 
@@ -34,13 +42,7 @@ class Board extends React.Component {
       <Line key={index} data={el} />
     );
 
-    return (
-      <table>
-        <tbody>
-          {items}
-        </tbody>
-      </table>
-    )
+    return <div class="board">{items}</div>
   }
 }
 
@@ -49,7 +51,7 @@ class Root extends React.Component {
   constructor(props) {
     super(props)
     this.state = {
-      board: ""
+      board: "....\n+++++"
     }
   }
 
