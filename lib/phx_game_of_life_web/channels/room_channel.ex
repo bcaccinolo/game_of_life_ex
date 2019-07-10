@@ -35,7 +35,7 @@ defmodule PhxGameOfLifeWeb.RoomChannel do
 
     push(socket, "new_msg", %{body: GameOfLifeCore.StateAgent.disp()})
 
-    # Process.sleep(1000)
+    Process.sleep(100)
     loop(line_count, col_count, socket, generation + 1)
   end
 end

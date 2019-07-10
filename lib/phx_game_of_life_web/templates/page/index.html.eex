@@ -3,12 +3,9 @@
   <input id="chat-input" type="text"></input>
 
 
-  <div id="react-app"></div>
+  <div id="react-app" data-gol="...+++"></div>
 
   <br/>
   <div id="messages"></div>
-
-
-
 
 </section>
