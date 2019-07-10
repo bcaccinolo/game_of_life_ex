@@ -6,7 +6,7 @@ defmodule PhxGameOfLifeWeb.RoomChannel do
     IO.puts("Connection to lobby done")
     IO.puts(room)
 
-    GameOfLifeCore.StateBuilder.random_state(50, 50)
+    GameOfLifeCore.StateBuilder.random_state(100, 100)
     |> GameOfLifeCore.StateBuilder.build_state()
     |> GameOfLifeCore.StateAgent.start_link()
 

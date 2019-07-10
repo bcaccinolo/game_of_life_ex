@@ -6,8 +6,8 @@ class Case extends React.Component {
     var style = {
       backgroundColor: 'black',
       border: '1px solid gray',
-      width: '10px',
-      height: '10px'
+      width: '5px',
+      height: '5px'
     }
     if (this.props.data === '.') { style['backgroundColor'] = 'white' }
 
