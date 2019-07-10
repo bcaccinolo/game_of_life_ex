@@ -9,8 +9,11 @@ defmodule PhxGameOfLifeWeb.RoomChannel do
   end
 
   # client asks for their current rank, push sent directly as a new event.
-  def handle_in("new_msg", payload, socket) do
+  def handle_in("new_msg", _payload, socket) do
     IO.puts("New message from client")
+
+    push(socket, "new_msg", %{body: "hello"})
+
     {:noreply, socket}
   end
 end
