@@ -1,7 +1,3 @@
 <section >
-
-  <input id="chat-input" type="text"></input>
-
   <div id="react-app"/>
-
 </section>

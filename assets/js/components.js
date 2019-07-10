@@ -11,7 +11,7 @@ class Case extends React.Component {
     }
     if (this.props.data === '.') { style['backgroundColor'] = 'white' }
 
-    return <div class="case" style={style} ></div>
+    return <div className="case" style={style} ></div>
   }
 }
 
@@ -29,7 +29,7 @@ class Line extends React.Component {
       <Case key={index} data={el} />
     )
 
-    return <div class="line" style={style} >{items}</div>
+    return <div className="line" style={style} >{items}</div>
   }
 }
 
@@ -42,7 +42,7 @@ class Board extends React.Component {
       <Line key={index} data={el} />
     );
 
-    return <div class="board">{items}</div>
+    return <div className="board">{items}</div>
   }
 }
 
@@ -53,38 +53,25 @@ class Root extends React.Component {
     this.state = {
       board: "....\n+++++"
     }
-  }
 
-  componentDidMount() {
-    this.connectWS()
-  }
-
-  connectWS() {
-    let socket = new Socket("/socket", {})
-    socket.connect()
-    let channel = socket.channel("room:lobby", {})
-
-    channel.join()
-     .receive("ok", resp => { console.log("Joined successfully", resp) })
-     .receive("error", resp => { console.log("Unable to join", resp) })
-
-    channel.on("new_msg", payload => {
+    this.props.channel.on("new_msg", payload => {
       this.setState({board: payload.body})
     })
 
-    let chatInput = document.querySelector("#chat-input")
-    chatInput.addEventListener("keypress", event => {
-      if(event.keyCode === 13){
-        channel.push("new_msg", {body: chatInput.value})
-        chatInput.value = ""
-      }
-    })
+    this.click = this.click.bind(this)
   }
 
+  click(e) {
+    e.preventDefault()
+    this.props.channel.push("new_msg", {})
+  }
 
   render() {
     return (
+      <>
+      <button id="start" onClick={this.click}>start</button>
        <Board data={this.state.board} />
+       </>
     )
   }
 }
