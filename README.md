@@ -1,5 +1,15 @@
 # PhxGameOfLife
 
+## the next part
+
+RoomChannel doit consommer GoL et non l'inverse.
+Il faut donc définir l'api GoL pour cela:
+ - Runner.init
+ - Runner.start
+ - Runner.toggle
+
+## the rest
+
 To start your Phoenix server:
 
   * Install dependencies with `mix deps.get`
