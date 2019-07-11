@@ -4,11 +4,8 @@ defmodule PhxGameOfLifeWeb.RoomChannel do
   # handles the special `"lobby"` subtopic
   def join("room:" <> room, _payload, socket) do
     IO.puts("Connection to lobby done")
-    IO.puts(room)
 
-    GameOfLifeCore.StateBuilder.random_state(100, 100)
-    |> GameOfLifeCore.StateBuilder.build_state()
-    |> GameOfLifeCore.StateAgent.start_link()
+    GameOfLifeCore.Runner.build_board(100, 100)
 
     {:ok, socket}
   end
@@ -17,25 +14,14 @@ defmodule PhxGameOfLifeWeb.RoomChannel do
   def handle_in("new_msg", _payload, socket) do
     IO.puts("New message from client")
 
-    board = GameOfLifeCore.StateAgent.state()
-    line_count = board |> Tuple.to_list() |> length
-    col_count = board |> elem(0) |> Tuple.to_list() |> length
+    # push(socket, "new_msg", %{body: "coucoc le monde"})
+    # broadcast_from(socket, "new_msg", %{body: "coucoc le monde"})
+    # broadcast(socket, "new_msg", %{body: "coucoc le monde"})
 
-    loop(line_count, col_count, socket)
+    GameOfLifeCore.Runner.disp()
+
 
     {:noreply, socket}
   end
 
-  def loop(line_count, col_count, socket, generation \\ 0) do
-    GameOfLifeCore.StateAgent.cell_and_env_list(line_count - 1, col_count - 1)
-    |> Enum.map(fn {env, pid} ->
-      Task.async(fn -> GameOfLifeCore.GolServer.calculate(pid, env) end)
-    end)
-    |> Enum.map(fn task -> Task.await(task) end)
-
-    push(socket, "new_msg", %{body: GameOfLifeCore.StateAgent.disp()})
-
-    Process.sleep(100)
-    loop(line_count, col_count, socket, generation + 1)
-  end
 end

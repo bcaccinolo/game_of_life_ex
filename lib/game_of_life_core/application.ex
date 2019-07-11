@@ -20,11 +20,6 @@ defmodule GameOfLifeCore.Application do
 
   def launch() do
 
-    # init NCurses
-    ExNcurses.initscr()
-    lines = ExNcurses.lines
-    cols = ExNcurses.cols
-    ExNcurses.curs_set(0) # no cursor
 
     # Block
     # [[0, 0, 0, 0],
@@ -68,7 +63,7 @@ defmodule GameOfLifeCore.Application do
     #  [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0]]
 
     # Random Board
-    GameOfLifeCore.StateBuilder.random_state(lines - 1, cols - 1)
+    GameOfLifeCore.StateBuilder.random_state(50, 50)
     |> GameOfLifeCore.StateBuilder.build_state
     |> GameOfLifeCore.StateAgent.start_link
 
@@ -84,7 +79,7 @@ defmodule GameOfLifeCore.Application do
     |> Enum.map(fn({env, pid}) -> Task.async(fn() -> GameOfLifeCore.GolServer.calculate(pid, env) end) end)
     |> Enum.map(fn(task) -> Task.await(task) end)
 
-    GameOfLifeCore.StateAgent.disp
+    GameOfLifeCore.Runner.disp()
     # Process.sleep(10)
     loop(line_count, col_count, generation + 1)
   end

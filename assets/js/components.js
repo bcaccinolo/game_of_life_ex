@@ -55,6 +55,9 @@ class Root extends React.Component {
     }
 
     this.props.channel.on("new_msg", payload => {
+      console.log('new message');
+      console.log(payload);
+
       this.setState({board: payload.body})
     })
 

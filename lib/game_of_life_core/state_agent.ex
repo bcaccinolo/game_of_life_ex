@@ -91,35 +91,4 @@ defmodule GameOfLifeCore.StateAgent do
     cell_server = elem(elem(board, line), col)
     GameOfLifeCore.GolServer.update(cell_server, new_cell)
   end
-
-  @doc """
-  Display the board
-  """
-  def disp do
-    board = Agent.get(__MODULE__, fn state -> state end)
-    line_count = board |> Tuple.to_list() |> length
-    col_count = board |> elem(0) |> Tuple.to_list() |> length
-
-    0..(line_count - 1)
-    |> Enum.reduce("", fn line, acc -> "#{acc}\n#{build_line(elem(board, line), col_count)}" end)
-  end
-
-  @doc """
-  Build a line to display from the board.
-  Example:
-    {1,1,0} => "++."
-  """
-  def build_line(board_line, col_count)
-  def build_line(_board_line, 0), do: ""
-  def build_line(board_line, col_count) do
-    cell =
-      elem(board_line, col_count - 1)
-      |> GameOfLifeCore.GolServer.state()
-      |> case do
-        0 -> "."
-        1 -> "+"
-      end
-
-    "#{build_line(board_line, col_count - 1)}#{cell}"
-  end
 end
