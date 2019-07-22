@@ -109,29 +109,4 @@ defmodule StateAgentTest do
                    {1, 0, 0}}
   end
 
-  test "build_line" do
-    [[1, 0, 0],
-    [1, 1, 0],
-    [1, 0, 0]]
-   |> GameOfLifeCore.StateBuilder.build_state
-   |> GameOfLifeCore.StateAgent.start_link
-
-   state = GameOfLifeCore.StateAgent.state
-   state_line = elem(state, 1)
-   res = GameOfLifeCore.StateAgent.build_line(state_line, 3)
-   assert res == "++."
-  end
-
-  test "disp" do
-    [[1, 0, 0],
-    [1, 1, 0],
-    [1, 0, 0]]
-   |> GameOfLifeCore.StateBuilder.build_state
-   |> GameOfLifeCore.StateAgent.start_link
-
-   expected =  "\n+..\n++.\n+.."
-   res = GameOfLifeCore.StateAgent.disp
-   assert res == expected
-  end
-
 end

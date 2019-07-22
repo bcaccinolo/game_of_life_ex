@@ -20,7 +20,6 @@ defmodule GameOfLifeCore.Application do
 
   def launch() do
 
-
     # Block
     # [[0, 0, 0, 0],
     #  [0, 1, 1, 0],

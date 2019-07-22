@@ -1,12 +1,22 @@
 # PhxGameOfLife
 
+
+## todo
+
+- 🔥modifier la structure du board, il faut que les dimensions soient stockées
+
+
+le state est
+[list, lines, columns]
+
+
+
 ## the next part
 
 RoomChannel doit consommer GoL et non l'inverse.
 Il faut donc définir l'api GoL pour cela:
- - Runner.init
- - Runner.start
- - Runner.toggle
+ - Runner.init_board : initialise le board de GenServers
+ - Runner.update_once : lance une itération de mise à jour
 
 ## the rest
 
