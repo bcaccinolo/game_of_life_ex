@@ -2,6 +2,8 @@ defmodule StateBuilderTest do
   use ExUnit.Case
   doctest GameOfLifeCore
 
+  alias GameOfLifeCore.StateBuilder
+
   require IEx
 
   test "build_state_from_value" do
@@ -9,8 +11,8 @@ defmodule StateBuilderTest do
     assert is_pid(pid)
   end
 
-  test "build_state_from_list" do
-    res = GameOfLifeCore.StateBuilder.build_state_from_list([1,0,1])
+  test "build_state_line" do
+    res = GameOfLifeCore.StateBuilder.build_state_line([1,0,1])
     assert res |> Tuple.to_list |> length == 3
     assert is_pid(elem(res, 1))
   end
@@ -24,8 +26,8 @@ defmodule StateBuilderTest do
     assert is_tuple(res)
   end
 
-  test "random_list" do
-    res = GameOfLifeCore.StateBuilder.random_list(3)
+  test "random_state_line" do
+    res = GameOfLifeCore.StateBuilder.random_state_line(3)
     assert length(res) == 3
   end
 
