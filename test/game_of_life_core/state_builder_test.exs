@@ -32,9 +32,23 @@ defmodule StateBuilderTest do
   end
 
   test "random_state" do
-    res = [h | t] = StateBuilder.random_state(50,25)
+    res = [h | _t] = StateBuilder.random_state(50,25)
     assert length(res) == 50
     assert length(h) == 25
+  end
+
+  test "build_random_state" do
+    line = 50
+    col = 25
+    {state, l, c} = StateBuilder.build_random_state(line, col)
+
+    [h | _t] = state |> Tuple.to_list
+
+    assert state |> Tuple.to_list |> length == 50
+    assert h |> Tuple.to_list |> length == 25
+
+    assert line == l
+    assert col == c
   end
 
 end

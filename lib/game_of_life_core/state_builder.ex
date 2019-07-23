@@ -2,12 +2,12 @@ defmodule GameOfLifeCore.StateBuilder do
   use Agent
 
   @doc """
-  Generate a random state.
+  Generate a random state of GenServers.
 
   Returns a tuple {random_state, line, column}
   """
-  def generate_random_list(line, column) do
-    {random_state(line, column), line, column}
+  def build_random_state(line, column) do
+    {random_state(line, column) |> build_state, line, column}
   end
 
   @doc """
