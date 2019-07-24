@@ -6,49 +6,26 @@ defmodule StateBuilderTest do
 
   require IEx
 
-  test "build_state_from_value" do
-    {:ok, pid} = StateBuilder.build_state_from_value(1)
+  test "genserver_from_value" do
+    pid = StateBuilder.genserver_from_value(1)
     assert is_pid(pid)
   end
 
-  test "build_state_line" do
-    res = StateBuilder.build_state_line([1,0,1])
-    assert res |> Tuple.to_list |> length == 3
-    assert is_pid(elem(res, 1))
-  end
-
-  test "build_state" do
-    state = [[1, 0, 0, 1],
-             [1, 1, 0, 1],
-             [1, 0, 0, 1]]
-    res = StateBuilder.build_state(state)
-    assert res |> Tuple.to_list |> length == 3
-    assert is_tuple(res)
-  end
-
-  test "random_state_line" do
-    res = StateBuilder.random_state_line(3)
-    assert length(res) == 3
+  test "build_random_state" do
+    {line, col} = {5, 2}
+    state = StateBuilder.build_random_state(line, col)
+    assert length(state) == line * col
   end
 
   test "random_state" do
-    res = [h | _t] = StateBuilder.random_state(50,25)
-    assert length(res) == 50
-    assert length(h) == 25
+    {line, col} = {5, 2}
+    {state, returned_line, returned_col} = StateBuilder.random_state(line, col)
+    assert length(state) == line * col
+    assert returned_line == line
+    assert returned_col == col
+
+    [h | _t] = state
+    assert is_pid(h)
+
   end
-
-  test "build_random_state" do
-    line = 50
-    col = 25
-    {state, l, c} = StateBuilder.build_random_state(line, col)
-
-    [h | _t] = state |> Tuple.to_list
-
-    assert state |> Tuple.to_list |> length == 50
-    assert h |> Tuple.to_list |> length == 25
-
-    assert line == l
-    assert col == c
-  end
-
 end
