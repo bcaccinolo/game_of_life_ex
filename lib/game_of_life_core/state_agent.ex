@@ -1,6 +1,12 @@
 defmodule GameOfLifeCore.StateAgent do
   use Agent
 
+  @doc """
+  Start the Agent with a new state.
+  The format of the state is {state, line, col}.
+
+  Note: the state is a one dimension list.
+  """
   def start_link(initial_value) do
     Agent.start_link(fn -> initial_value end, name: __MODULE__)
   end
@@ -9,7 +15,14 @@ defmodule GameOfLifeCore.StateAgent do
   Return the complete state.
   """
   def state do
-    Agent.get(__MODULE__, fn state -> state end)
+    Agent.get(__MODULE__, fn {state, _line, _col} -> state end)
+  end
+
+  @doc """
+  Returns state's dimension: {line, col}
+  """
+  def dimensions do
+    Agent.get(__MODULE__, fn {_state, line, col} -> {line, col} end)
   end
 
   @doc """
@@ -20,24 +33,23 @@ defmodule GameOfLifeCore.StateAgent do
                {1, 0, 1}}
   """
   def cell_and_environment(line, col) do
-    board = Agent.get(__MODULE__, fn state -> state end)
-    line_count = board |> Tuple.to_list() |> length
-    col_count = board |> elem(0) |> Tuple.to_list() |> length
+    state = state()
+    dimensions = dimensions()
 
-    {
-      {
-        {extract(board, line_count, col_count, line - 1, col - 1),
-         extract(board, line_count, col_count, line - 1, col),
-         extract(board, line_count, col_count, line - 1, col + 1)},
-        {extract(board, line_count, col_count, line, col - 1),
-         extract(board, line_count, col_count, line, col),
-         extract(board, line_count, col_count, line, col + 1)},
-        {extract(board, line_count, col_count, line + 1, col - 1),
-         extract(board, line_count, col_count, line + 1, col),
-         extract(board, line_count, col_count, line + 1, col + 1)}
-      },
-      elem(elem(board, line), col)
-    }
+    # {
+    #   {
+    #     {State.get(state, dimensions, line - 1, col - 1),
+    #      extract(board, line_count, col_count, line - 1, col),
+    #      extract(board, line_count, col_count, line - 1, col + 1)},
+    #     {extract(board, line_count, col_count, line, col - 1),
+    #      extract(board, line_count, col_count, line, col),
+    #      extract(board, line_count, col_count, line, col + 1)},
+    #     {extract(board, line_count, col_count, line + 1, col - 1),
+    #      extract(board, line_count, col_count, line + 1, col),
+    #      extract(board, line_count, col_count, line + 1, col + 1)}
+    #   },
+    #   elem(elem(board, line), col)
+    # }
   end
 
   @doc """
