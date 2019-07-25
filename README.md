@@ -1,15 +1,20 @@
 # PhxGameOfLife
 
-
 ## todo
 
-- 🔥modifier la structure du board, il faut que les dimensions soient stockées
+- ✅modifier la structure du board, il faut que les dimensions soient stockées
 
+- ✅mettre en place le module State qui permet de manipuler un state se trouvant sous forme de liste.
+
+- ✅avancer sur StateAgent.cell_and_environment(line, col)
+
+- 🔥factoriser Application & Runner et voir comment je souhaite que cela fonctionne avec la partir Phoenix.Channel
+
+
+## Notes
 
 le state est
-[list, lines, columns]
-
-
+{ list, lines, columns }
 
 ## the next part
 
