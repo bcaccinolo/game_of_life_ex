@@ -23,5 +23,6 @@ defmodule GameOfLifeCore.State do
   From an index of the list, returns the corresponding coordinates of the 2 dimensions matrix.
   """
   def coordinates(index, line, col) do
+    {Kernel.div(index, col) + 1, Kernel.rem(index, col) + 1}
   end
 end

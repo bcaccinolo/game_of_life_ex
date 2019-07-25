@@ -6,6 +6,9 @@ defmodule StateTest do
   doctest GameOfLifeCore
 
   test "coordinates" do
+    assert State.coordinates(5, 3, 3) == {2, 3}
+    assert State.coordinates(0, 3, 3) == {1, 1}
+    assert State.coordinates(8, 3, 3) == {3, 3}
   end
 
   test "position" do
