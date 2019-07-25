@@ -1,17 +1,6 @@
 defmodule GameOfLifeCore.StateAgent do
   use Agent
 
-  # Callback invoked by `use`.
-  #
-  # For now it returns a quoted expression that
-  # imports the module itself into the user code.
-  @doc false
-  defmacro __using__(_opts) do
-    quote do
-      import GameOfLifeCore.State
-    end
-  end
-
   @doc """
   Start the Agent with a new state.
   The format of the state is {state, line, col}.
@@ -34,6 +23,13 @@ defmodule GameOfLifeCore.StateAgent do
   """
   def dimensions do
     Agent.get(__MODULE__, fn {_state, line, col} -> {line, col} end)
+  end
+
+
+  def environment_and_cell_by_index(index) do
+    {line, col} = dimensions()
+    {cell_line, cell_col} = GameOfLifeCore.State.coordinates(index, line, col)
+    environment_and_cell(cell_line, cell_col)
   end
 
   @doc """
