@@ -63,7 +63,6 @@ defmodule GameOfLifeCore.StateAgent do
       {cell_line + 1, cell_col},
       {cell_line + 1, cell_col + 1}
     ]
-    |> IO.inspect
     |> Enum.map(fn {x, y} -> GameOfLifeCore.State.get(state, line, col, x, y) end)
     |> Enum.map(fn pid -> GameOfLifeCore.GolServer.state(pid) end)
   end
@@ -76,12 +75,19 @@ defmodule GameOfLifeCore.StateAgent do
   Update one cell
 
   Params
-  line, col : coordinates of the cell in the board
+  cell_line, cell_col : coordinates of the cell in the board
   new_state : the value of the cell (0 or 1)
   """
-  def update_cell(line, col, new_cell) do
-    board = Agent.get(__MODULE__, fn state -> state end)
-    cell_server = elem(elem(board, line), col)
-    GameOfLifeCore.GolServer.update(cell_server, new_cell)
+  def update_cell(cell_line, cell_col, new_cell) do
+    state = state()
+    {line, col} = dimensions()
+
+    GameOfLifeCore.State.get(state, line, col, cell_line, cell_col)
+    |> GameOfLifeCore.GolServer.update(new_cell)
+    |> IO.inspect()
+    |> case do
+      {:error} -> {:error}
+      _ -> {:ok}
+    end
   end
 end

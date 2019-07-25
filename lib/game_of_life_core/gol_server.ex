@@ -10,13 +10,11 @@ defmodule GameOfLifeCore.GolServer do
   end
 
   # Client
-  def state(pid) do
-    GenServer.call(pid, :state)
-  end
+  def state(:out_of_boundaries), do: 0
+  def state(pid), do: GenServer.call(pid, :state)
 
-  def update(pid, state) do
-    GenServer.cast(pid, {:update, state})
-  end
+  def update(:out_of_boundaries, _state), do: {:error}
+  def update(pid, state), do: GenServer.cast(pid, {:update, state})
 
   @doc """
   Do the game of life calculation for the cell and it stores the result in the state.

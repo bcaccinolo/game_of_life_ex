@@ -26,6 +26,5 @@ defmodule StateBuilderTest do
 
     [h | _t] = state
     assert is_pid(h)
-
   end
 end

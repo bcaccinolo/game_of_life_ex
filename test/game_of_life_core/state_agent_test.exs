@@ -1,112 +1,39 @@
 defmodule StateAgentTest do
   use ExUnit.Case
-
+  use GameOfLifeCore.StateAgent
   require IEx
 
-  test "extract" do
-    [[1, 0, 0, 1],
-     [1, 1, 0, 1],
-     [1, 0, 0, 6]]
-    |> GameOfLifeCore.StateBuilder.build_state
-    |> GameOfLifeCore.StateAgent.start_link
+  test "environment_and_cell" do
+    {[1, 0, 0, 1, 1, 0, 1, 0, 0] |> GameOfLifeCore.StateBuilder.build_genserver_state(), 3, 3}
+    |> GameOfLifeCore.StateAgent.start_link()
 
-    board = GameOfLifeCore.StateAgent.state
-    assert GameOfLifeCore.StateAgent.extract(board, 3, 4, 0, 3) == 1
-    assert GameOfLifeCore.StateAgent.extract(board, 3, 4, 2, 3) == 6
-  end
+    {res, pid} = GameOfLifeCore.StateAgent.environment_and_cell(1, 1)
+    assert res == [0, 0, 0, 0, 1, 0, 0, 1, 1]
+    assert is_pid(pid)
 
-  test "cell_and_environment" do
-    [[1, 0, 0],
-     [1, 1, 0],
-     [1, 0, 0]]
-    |> GameOfLifeCore.StateBuilder.build_state
-    |> GameOfLifeCore.StateAgent.start_link
+    {res, _pid} = GameOfLifeCore.StateAgent.environment_and_cell(2, 2)
+    assert res == [1, 0, 0, 1, 1, 0, 1, 0, 0]
 
-    {res, _pid} = GameOfLifeCore.StateAgent.cell_and_environment(0, 1)
-    assert res == {{0, 0, 0},
-                   {1, 0, 0},
-                   {1, 1, 0}}
-
-    {res, _pid} = GameOfLifeCore.StateAgent.cell_and_environment(1, 1)
-    assert res == {{1, 0, 0},
-                   {1, 1, 0},
-                   {1, 0, 0}}
-
-    {res, _pid} = GameOfLifeCore.StateAgent.cell_and_environment(2, 1)
-    assert res == {{1, 1, 0},
-                   {1, 0, 0},
-                   {0, 0, 0}}
-  end
-
-  test "cell_and_environment 2" do
-    [[0, 0, 0],
-     [1, 1, 0],
-     [1, 0, 0]]
-    |> GameOfLifeCore.StateBuilder.build_state
-    |> GameOfLifeCore.StateAgent.start_link
-
-    {res, _pid} = GameOfLifeCore.StateAgent.cell_and_environment(0, 0)
-    assert res == {{0, 0, 0},
-                   {0, 0, 0},
-                   {0, 1, 1}}
-  end
-
-  test "cell_and_environment 3" do
-    [[1, 0, 0, 1, 1],
-     [1, 1, 0, 1, 1],
-     [1, 0, 0, 1, 6]]
-    |> GameOfLifeCore.StateBuilder.build_state
-    |> GameOfLifeCore.StateAgent.start_link
-
-    {res, _pid} = GameOfLifeCore.StateAgent.cell_and_environment(2, 3)
-    assert res == {{0, 1, 1},
-                   {0, 1, 6},
-                   {0, 0, 0}}
-  end
-
-  test "cell_and_env_line_list" do
-    [[1, 0, 0, 1],
-     [1, 1, 0, 1],
-     [1, 0, 0, 1]]
-    |> GameOfLifeCore.StateBuilder.build_state
-    |> GameOfLifeCore.StateAgent.start_link
-
-    board = GameOfLifeCore.StateAgent.state
-    line_count = board |> Tuple.to_list |> length
-    col_count = board |> elem(0) |> Tuple.to_list |> length
-
-    res = GameOfLifeCore.StateAgent.cell_and_env_line_list(line_count - 1, col_count - 1)
-    assert length(res) == 4
-  end
-
-  test "cell_and_env_list" do
-    [[1, 0, 0, 1],
-     [1, 1, 0, 1],
-     [1, 0, 0, 1]]
-    |> GameOfLifeCore.StateBuilder.build_state
-    |> GameOfLifeCore.StateAgent.start_link
-
-    board = GameOfLifeCore.StateAgent.state
-    line_count = board |> Tuple.to_list |> length
-    col_count = board |> elem(0) |> Tuple.to_list |> length
-
-    res = GameOfLifeCore.StateAgent.cell_and_env_list(line_count - 1, col_count - 1)
-    assert length(res) == 12
+    {res, _pid} = GameOfLifeCore.StateAgent.environment_and_cell(2, 3)
+    assert res == [0, 0, 0, 1, 0, 0, 0, 0, 0]
   end
 
   test "update_cell" do
-    [[1, 0, 0],
-     [1, 1, 0],
-     [1, 0, 0]]
-    |> GameOfLifeCore.StateBuilder.build_state
-    |> GameOfLifeCore.StateAgent.start_link
+    {[1, 0, 0, 1, 1, 0, 1, 0, 0] |> GameOfLifeCore.StateBuilder.build_genserver_state(), 3, 3}
+    |> GameOfLifeCore.StateAgent.start_link()
 
-    GameOfLifeCore.StateAgent.update_cell(0, 1, 1)
+    # coordinates are out of scope
+    {status} = GameOfLifeCore.StateAgent.update_cell(0, 1, 1)
+    assert status == :error
 
-    {res, _pid} = GameOfLifeCore.StateAgent.cell_and_environment(1, 1)
-    assert res == {{1, 1, 0},
-                   {1, 1, 0},
-                   {1, 0, 0}}
+    # coordinates are in the scope
+    {status} = GameOfLifeCore.StateAgent.update_cell(2, 2, 42)
+    assert status == :ok
+
+    # validate the value has been saved
+    state = GameOfLifeCore.StateAgent.state()
+    {line, col} = GameOfLifeCore.StateAgent.dimensions()
+    cell = GameOfLifeCore.State.get(state, line, col, 2, 2) |> GameOfLifeCore.GolServer.state
+    assert cell == 42
   end
-
 end
