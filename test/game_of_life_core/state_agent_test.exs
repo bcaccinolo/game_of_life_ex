@@ -7,9 +7,15 @@ defmodule StateAgentTest do
     {[1, 0, 0, 1, 1, 0, 1, 0, 0] |> StateBuilder.build_genserver_state(), 3, 3}
     |> StateAgent.start_link()
 
-    {res, pid} = StateAgent.environment_and_cell(1, 1)
+    {res, pid} = StateAgent.environment_and_cell_by_index(0)
     assert res == [0, 0, 0, 0, 1, 0, 0, 1, 1]
     assert is_pid(pid)
+
+    {res, _pid} = StateAgent.environment_and_cell_by_index(4)
+    assert res == [1, 0, 0, 1, 1, 0, 1, 0, 0]
+
+    {res, _pid} = StateAgent.environment_and_cell_by_index(5)
+    assert res == [0, 0, 0, 1, 0, 0, 0, 0, 0]
   end
 
   test "environment_and_cell" do
