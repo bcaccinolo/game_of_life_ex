@@ -1,15 +1,4 @@
 defmodule GameOfLifeCore.State do
-  # Callback invoked by `use`.
-  #
-  # For now it returns a quoted expression that
-  # imports the module itself into the user code.
-  @doc false
-  defmacro __using__(_opts) do
-    quote do
-      import GameOfLifeCore.State
-    end
-  end
-
   @doc """
   Returns the element present at the given coordinates.
   Coordinates are passed cause we manipulate the list as a 2 dimensions matrix.
@@ -29,4 +18,10 @@ defmodule GameOfLifeCore.State do
   def position(_line, _col, _x, y) when y < 1, do: -1
   def position(_line, col, _x, y) when y > col, do: -1
   def position(_line, col, x, y), do: col * (x - 1) + y - 1
+
+  @doc """
+  From an index of the list, returns the corresponding coordinates of the 2 dimensions matrix.
+  """
+  def coordinates(index, line, col) do
+  end
 end
