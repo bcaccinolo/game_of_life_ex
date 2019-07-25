@@ -4,7 +4,7 @@ defmodule GameOfLifeCore.StateBuilder do
   @doc """
   Generate a random state of GenServers.
 
-  Note: the state is a one dimension tuple
+  Note: the state is a one dimension list
 
   Returns a tuple {random_state, line, column}
   """
@@ -15,9 +15,9 @@ defmodule GameOfLifeCore.StateBuilder do
   @doc """
   Generate a random state to start the game of life.
 
-  Note: the state is a one dimension tuple {0, 1, 1, 0, ...}
+  Note: the state is a one dimension list [0, 1, 1, 0, ...]
 
-  Returns: {cell_state, line, column}
+  Returns: the state list
   """
   def build_random_state(line, col) do
     1..(line * col)
