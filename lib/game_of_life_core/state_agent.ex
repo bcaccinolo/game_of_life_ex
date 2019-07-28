@@ -1,7 +1,7 @@
 defmodule GameOfLifeCore.StateAgent do
   use Agent
 
-  alias GameOfLifeCore.GolServer
+  alias GameOfLifeCore.{GolServer, State}
 
   @doc """
   Start the Agent with a new state.
@@ -45,16 +45,14 @@ defmodule GameOfLifeCore.StateAgent do
 
   def environment_and_cell_by_index(index) do
     {line, col} = dimensions()
-    {cell_line, cell_col} = GameOfLifeCore.State.coordinates(index, line, col)
+    {cell_line, cell_col} = State.coordinates(index, line, col)
     environment_and_cell(cell_line, cell_col)
   end
 
   @doc """
   Get the state and the environment of the cell present at line and col.
   Example:
-    (3, 8) -> {{1, 0, 1},
-               {1, 1, 1},
-               {1, 0, 1}}
+    (3, 8) -> {[1, 0, 1, 1, 1, 1, 1, 0, 1], cell_pid}
   """
   def environment_and_cell(cell_line, cell_col) do
     {state, line, col} = state_and_dimensions()
@@ -63,6 +61,10 @@ defmodule GameOfLifeCore.StateAgent do
      cell(state, line, col, cell_line, cell_col)}
   end
 
+  @doc """
+  Environment is the list of cells located around the cell at (cell_line, cell_col)
+  Example: [0, 1, 1, 1, 0, 1, 0, 0, 1]
+  """
   def environment(state, line, col, cell_line, cell_col) do
     [
       {cell_line - 1, cell_col - 1},
