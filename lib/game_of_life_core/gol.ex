@@ -3,17 +3,6 @@ defmodule GameOfLifeCore.Gol do
   Implementation of the Game Of Life logic
   """
 
-  # Callback invoked by `use`.
-  #
-  # For now it returns a quoted expression that
-  # imports the module itself into the user code.
-  @doc false
-  defmacro __using__(_opts) do
-    quote do
-      import GameOfLifeCore.Gol
-    end
-  end
-
   @doc """
   Do the calcultation
 
