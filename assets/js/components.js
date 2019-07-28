@@ -9,7 +9,7 @@ class Case extends React.Component {
       width: '5px',
       height: '5px'
     }
-    if (this.props.data === '.') { style['backgroundColor'] = 'white' }
+    if (this.props.data === '0') { style['backgroundColor'] = 'white' }
 
     return <div className="case" style={style} ></div>
   }
@@ -51,28 +51,28 @@ class Root extends React.Component {
   constructor(props) {
     super(props)
     this.state = {
-      board: "....\n+++++"
+      board: "11111\n00000"
     }
 
-    this.props.channel.on("new_msg", payload => {
+    this.props.channel.on("one_step", payload => {
       console.log('new message');
       console.log(payload);
 
       this.setState({board: payload.body})
     })
 
-    this.click = this.click.bind(this)
+    this.step = this.step.bind(this)
   }
 
-  click(e) {
+  step(e) {
     e.preventDefault()
-    this.props.channel.push("new_msg", {})
+    this.props.channel.push("one_step", {})
   }
 
   render() {
     return (
       <>
-      <button id="start" onClick={this.click}>start</button>
+      <button id="step" onClick={this.step}>start</button>
        <Board data={this.state.board} />
        </>
     )
