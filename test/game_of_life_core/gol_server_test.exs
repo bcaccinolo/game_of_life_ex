@@ -21,16 +21,9 @@ defmodule GolServerTest do
   test "calculate" do
      {:ok, pid} = GameOfLifeCore.GolServer.start_link(0)
 
-     a = {{1, 0, 0},
-          {1, 1, 0},
-          {1, 0, 0}}
+     a = [1, 0, 0,1, 1, 0,1, 0, 0]
      assert GameOfLifeCore.GolServer.calculate(pid, a, 1, 1) == 1
      assert GameOfLifeCore.GolServer.state(pid) == 1
-
-     a = {{1, 0},
-          {1, 0}}
-     assert GameOfLifeCore.GolServer.calculate(pid, a, 1, 1) == 0
-     assert GameOfLifeCore.GolServer.state(pid) == 0
   end
 
 end

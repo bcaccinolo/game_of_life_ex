@@ -32,8 +32,8 @@ defmodule GameOfLifeCore.GolServer do
     {:reply, state, state}
   end
 
-  def handle_call({:calculate, environment, line, col}, _from, _state) do
-    result = GameOfLifeCore.Gol.live_or_let_die(environment, line, col)
+  def handle_call({:calculate, environment, _line, _col}, _from, _state) do
+    result = GameOfLifeCore.Gol.live_or_let_die(environment)
     {:reply, result, result}
   end
 
