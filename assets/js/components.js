@@ -6,8 +6,8 @@ class Case extends React.Component {
     var style = {
       backgroundColor: 'black',
       border: '1px solid gray',
-      width: '5px',
-      height: '5px'
+      width: '7px',
+      height: '7px'
     }
     if (this.props.data === '0') { style['backgroundColor'] = 'white' }
 
@@ -51,7 +51,8 @@ class Root extends React.Component {
   constructor(props) {
     super(props)
     this.state = {
-      board: "11111\n00000"
+      board: "11111\n00000",
+      loopId: null
     }
 
     this.props.channel.on("one_step", payload => {
@@ -62,6 +63,8 @@ class Root extends React.Component {
     })
 
     this.step = this.step.bind(this)
+    this.start = this.start.bind(this)
+    this.stop = this.stop.bind(this)
   }
 
   step(e) {
@@ -69,10 +72,26 @@ class Root extends React.Component {
     this.props.channel.push("one_step", {})
   }
 
+  start(e) {
+    e.preventDefault()
+    let loopId = setInterval(function(){ this.props.channel.push("one_step", {}) }.bind(this), 2000)
+    this.setState({loopId: loopId})
+  }
+
+  stop(e) {
+    e.preventDefault()
+    if(this.state != null){
+      clearInterval(this.state.loopId)
+      this.setState({loopId: null})
+    }
+  }
+
   render() {
     return (
       <>
-      <button id="step" onClick={this.step}>start</button>
+      <button id="step" onClick={this.step}>step</button>
+      <button id="start" onClick={this.start}>start</button>
+      <button id="stop" onClick={this.stop}>stop</button>
        <Board data={this.state.board} />
        </>
     )

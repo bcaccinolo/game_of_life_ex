@@ -5,7 +5,7 @@ defmodule PhxGameOfLifeWeb.RoomChannel do
   def join("room:" <> _room, _payload, socket) do
     # IO.puts("Connection to lobby done")
 
-    GameOfLifeCore.Runner.build_random_board(100, 100)
+    GameOfLifeCore.Runner.build_random_board(50, 50)
 
     {:ok, socket}
   end
