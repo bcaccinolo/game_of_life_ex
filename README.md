@@ -16,7 +16,10 @@
 
 - ✅supprimer Application
 
-- 🔥faire un test affichant le temps mis par x iteration
+- ✅faire un test affichant le temps mis par x iteration
+
+- 🔥Performance optimisation
+  - 🔥StateAgent.environnement tout gérer en mode liste et non en matrice
 
 ## Notes
 
