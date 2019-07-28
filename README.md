@@ -8,8 +8,14 @@
 
 - ✅avancer sur StateAgent.cell_and_environment(line, col)
 
-- 🔥factoriser Application & Runner et voir comment je souhaite que cela fonctionne avec la partir Phoenix.Channel
+- ✅StateAgent: récupérer tout le state {state, line, col}
 
+- 🔥Runner: avoir la méthode `disp` qui convertie en chaîne de caractère
+
+- Runner: avoir la méthode `one_generation`
+  - not finished : do the test
+
+- supprimer Application
 
 ## Notes
 
@@ -42,3 +48,19 @@ Ready to run in production? Please [check our deployment guides](https://hexdocs
   * Docs: https://hexdocs.pm/phoenix
   * Mailing list: http://groups.google.com/group/phoenix-talk
   * Source: https://github.com/phoenixframework/phoenix
+
+
+## Helpers
+
+0, 0, 1, 0,
+1, 0, 1, 0,
+0, 1, 0, 0,
+0, 1, 1, 0,
+0, 0, 0, 0
+
+00101010010001100000
+
+1, 0, 0,
+1, 1, 0,
+1, 0, 0
+

@@ -2,8 +2,10 @@ efmodule RunnerTest do
   use ExUnit.Case
   doctest GameOfLifeCore
 
-  use GameOfLifeCore.Runner
+  alias GameOfLifeCore.Runner
 
   test "one_generation" do
-
+    # I create a cell state
+    # I iterate
+    # I compare
   end
