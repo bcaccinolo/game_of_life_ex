@@ -1,9 +1,22 @@
 defmodule GameOfLifeCore.Runner do
+  alias GameOfLifeCore.{StateAgent, GolServer}
 
-  def build_board(line, col) do
-    GameOfLifeCore.StateBuilder.random_state(line, col)
-    |> GameOfLifeCore.StateBuilder.build_state()
-    |> GameOfLifeCore.StateAgent.start_link()
+  @doc """
+  Do one Game of Life iteration on the existing state.
+  It will create or remove cells.
+  """
+  def one_generation do
+    {line, col} = StateAgent.dimensions()
+    Enum.each 1..(line * col), fn (index) -> one_generation_one_cell(index) end
+  end
+
+  @doc """
+  Do one Game of Life iteration on one cell
+  """
+  def one_generation_one_cell(index) do
+    StateAgent.environment_and_cell_by_index(index)
+    |> Enum.map(fn {env, pid} -> Task.async(fn -> GolServer.calculate(pid, env) end) end)
+    |> Enum.map(fn task -> Task.await(task) end)
   end
 
   @doc """
@@ -15,26 +28,7 @@ defmodule GameOfLifeCore.Runner do
     col_count = board |> elem(0) |> Tuple.to_list() |> length
 
     0..(line_count - 1)
-    |> Enum.reduce("", fn line, acc -> "#{acc}\n#{build_line(elem(board, line), col_count)}" end)
-  end
 
-  @doc """
-  Build a line to display from the board.
-  Example:
-    {1,1,0} => "++."
-  """
-  def build_line(board_line, col_count)
-  def build_line(_board_line, 0), do: ""
-
-  def build_line(board_line, col_count) do
-    cell =
-      elem(board_line, col_count - 1)
-      |> GameOfLifeCore.GolServer.state()
-      |> case do
-        0 -> "."
-        1 -> "+"
-      end
-
-    "#{build_line(board_line, col_count - 1)}#{cell}"
+    # |> Enum.reduce("", fn line, acc -> "#{acc}\n#{build_line(elem(board, line), col_count)}" end)
   end
 end
