@@ -7,25 +7,12 @@ defmodule GameOfLifeCore.Gol do
   Do the calcultation
 
   ## Params
-    - environment: a tuple of 3 tuples containing the value of the cell and the one around.
-                 example: {{1, 0, 1},
-                           {1, 1, 1},
-                           {1, 0, 1}}
-                 it can also be :
-                 example: {{1, 0},
-                           {1, 1},
-                           {1, 0}}
-                 if the cell is on the border. Or even:
-                 example: {{1, 0},
-                           {1, 0}}
-                  if the cell is in a corner.
-
-    - line & col: the coordinates of the cell to evaluate in regard of its environment.
+    - environment: the list
 
   Returns the value of the cell.
   """
-  def live_or_let_die(environment, line, col) do
-    calculate(neighbours(environment, line, col), elem(elem(environment, line), col))
+  def live_or_let_die(environment) do
+    calculate(neighbours(environment), Enum.at(environment, 4))
   end
 
   @doc """
@@ -46,37 +33,18 @@ defmodule GameOfLifeCore.Gol do
 
   Returns the value of the cell.
   """
-  def neighbours(environment, line, col) do
-    sumMatrix(environment) - elem(elem(environment, line), col)
+  def neighbours(environment) do
+    sumMatrix(environment) - Enum.at(environment, 4)
   end
 
   @doc """
-  Sum the content of a Matrix made of tuples.
-
-  ## Params
-    - matrix: the list to sum.
-    - result: the accumulator.
+  Sum the content of a Liest
 
   Returns the sum.
   """
-  def sumMatrix(matrix, result \\ 0)
-  def sumMatrix({a, b, c}, result) do sumMatrix({b, c}, result + GameOfLifeCore.Gol.sumList(Tuple.to_list(a))) end
-  def sumMatrix({a, b}, result) do sumMatrix({b}, result + GameOfLifeCore.Gol.sumList(Tuple.to_list(a))) end
-  def sumMatrix({a}, result) do result + GameOfLifeCore.Gol.sumList(Tuple.to_list(a)) end
-  def sumMatrix({}, result) do result end
-
-  @doc """
-  Sum all the elem of a list.
-
-  ## Params
-    - list: the list to sum.
-    - result: the accumulator.
-
-  Returns the sum.
-  """
-  def sumList(list, result \\ 0)
-  def sumList([hd | tl], result) do sumList(tl, result + hd) end
-  def sumList([], result)        do result end
+  def sumMatrix(list) do
+    Enum.reduce(list, 0, fn (v, acc) -> acc + v end)
+  end
 
 end
 
