@@ -10,9 +10,9 @@
 
 - ✅StateAgent: récupérer tout le state {state, line, col}
 
-- 🔥Runner: avoir la méthode `disp` qui convertie en chaîne de caractère
+- ✅StateAgent.to_s
 
-- Runner: avoir la méthode `one_generation`
+- 🔥Runner: avoir la méthode `one_generation`
   - not finished : do the test
 
 - supprimer Application

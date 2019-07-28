@@ -14,8 +14,8 @@ defmodule GameOfLifeCore.Runner do
   Do one Game of Life iteration on one cell
   """
   def one_generation_one_cell(index) do
-    StateAgent.environment_and_cell_by_index(index)
-    |> Enum.map(fn {env, pid} -> Task.async(fn -> GolServer.calculate(pid, env) end) end)
-    |> Enum.map(fn task -> Task.await(task) end)
+    {env, pid} = StateAgent.environment_and_cell_by_index(index)
+    Task.async(fn -> GolServer.calculate(pid, env) end)
+    |> Task.await
   end
 end
