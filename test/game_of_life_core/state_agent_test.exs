@@ -11,6 +11,10 @@ defmodule StateAgentTest do
     assert res == [0, 0, 0, 0, 1, 0, 0, 1, 1]
     assert is_pid(pid)
 
+    {res, pid} = StateAgent.environment_and_cell_by_index(1)
+    assert res == [0, 0, 0, 1, 0, 0, 1, 1, 0]
+    assert is_pid(pid)
+
     {res, _pid} = StateAgent.environment_and_cell_by_index(4)
     assert res == [1, 0, 0, 1, 1, 0, 1, 0, 0]
 

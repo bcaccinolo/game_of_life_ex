@@ -7,15 +7,10 @@ defmodule GameOfLifeCore.Runner do
   """
   def one_generation do
     {line, col} = StateAgent.dimensions()
-    Enum.each(1..(line * col), fn index -> one_generation_one_cell(index) end)
-  end
 
-  @doc """
-  Do one Game of Life iteration on one cell
-  """
-  def one_generation_one_cell(index) do
-    {env, pid} = StateAgent.environment_and_cell_by_index(index)
-    Task.async(fn -> GolServer.calculate(pid, env) end)
-    |> Task.await
+    0..(line * col - 1)
+    |> Enum.map(fn index -> StateAgent.environment_and_cell_by_index(index) end)
+    |> Enum.map(fn {env, pid} -> Task.async(fn -> GolServer.calculate(pid, env) end) end)
+    |> Enum.each(fn task -> Task.await(task) end)
   end
 end
