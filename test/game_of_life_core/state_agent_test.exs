@@ -34,8 +34,8 @@ defmodule StateAgentTest do
   end
 
   test "update_cell" do
-    {[1, 0, 0, 1, 1, 0, 1, 0, 0] |> StateBuilder.build_genserver_state(), 3, 3}
-    |> StateAgent.start_link()
+      {[1, 0, 0, 1, 1, 0, 1, 0, 0] |> StateBuilder.build_genserver_state(), 3, 3}
+      |> StateAgent.start_link()
 
     # coordinates are out of scope
     {status} = StateAgent.update_cell(0, 1, 1)
@@ -51,4 +51,21 @@ defmodule StateAgentTest do
     cell = State.get(state, line, col, 2, 2) |> GolServer.state()
     assert cell == 42
   end
+
+  test "state_values" do
+    cell_values = [1, 0, 0, 1, 1, 0, 1, 0, 0]
+    {cell_values |> StateBuilder.build_genserver_state(), 3, 3}
+    |> StateAgent.start_link()
+
+    assert StateAgent.state_values == cell_values
+  end
+
+  test "to_s" do
+    cell_values = [1, 0, 0, 1, 1, 0, 1, 0, 0]
+    {cell_values |> StateBuilder.build_genserver_state(), 3, 3}
+    |> StateAgent.start_link()
+
+    assert StateAgent.to_s == "100\n110\n100\n"
+  end
+
 end

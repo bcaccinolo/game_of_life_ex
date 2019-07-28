@@ -1,6 +1,8 @@
 defmodule GameOfLifeCore.StateAgent do
   use Agent
 
+  alias GameOfLifeCore.GolServer
+
   @doc """
   Start the Agent with a new state.
   The format of the state is {state, line, col}.
@@ -23,6 +25,14 @@ defmodule GameOfLifeCore.StateAgent do
   """
   def state do
     Agent.get(__MODULE__, fn {state, _line, _col} -> state end)
+  end
+
+  @doc """
+  Retunr the values of the board state.
+  Example: [0, 1, 1, 0 ...]
+  """
+  def state_values do
+    state() |> Enum.map(fn (pid) -> GolServer.state(pid) end)
   end
 
   @doc """
@@ -90,4 +100,29 @@ defmodule GameOfLifeCore.StateAgent do
       _ -> {:ok}
     end
   end
+
+  @doc """
+  to string !
+  Example: "100\n110\n100"
+  """
+  def to_s do
+    {_line, col} = dimensions()
+    # here I'm currying 'cell_value_to_s' cause I don't want to use the variable 'col' as a global var.
+    cell_to_s = &cell_value_to_s(col, &1, &2)
+    state_values()
+    |> Enum.with_index
+    |> Enum.reduce("", fn ({cell_state, index}, acc) ->  "#{acc}#{cell_to_s.(cell_state, index)}" end)
+  end
+
+  @doc """
+  Used in 'to_s'
+  Handle end of lines by adding '\n' at the end
+  """
+  def cell_value_to_s line_length, cell_state, index do
+    case rem(index + 1, line_length) == 0 do
+       true -> "#{cell_state}\n"
+        _ -> "#{cell_state}"
+    end
+  end
+
 end
