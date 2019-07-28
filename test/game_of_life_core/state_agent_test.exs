@@ -46,8 +46,8 @@ defmodule StateAgentTest do
     assert status == :ok
 
     # validate the value has been saved
-    state = StateAgent.state()
-    {line, col} = StateAgent.dimensions()
+    {state, line, col} = StateAgent.state_and_dimensions()
+
     cell = State.get(state, line, col, 2, 2) |> GolServer.state()
     assert cell == 42
   end

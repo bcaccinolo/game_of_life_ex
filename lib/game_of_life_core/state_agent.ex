@@ -12,7 +12,14 @@ defmodule GameOfLifeCore.StateAgent do
   end
 
   @doc """
-  Return the complete state.
+  Returns the whole state {state, line, col}
+  """
+  def state_and_dimensions do
+    Agent.get(__MODULE__, fn state -> state end)
+  end
+
+  @doc """
+  Return the board state without dimensions
   """
   def state do
     Agent.get(__MODULE__, fn {state, _line, _col} -> state end)
@@ -40,8 +47,7 @@ defmodule GameOfLifeCore.StateAgent do
                {1, 0, 1}}
   """
   def environment_and_cell(cell_line, cell_col) do
-    state = state()
-    {line, col} = dimensions()
+    {state, line, col} = state_and_dimensions()
 
     {environment(state, line, col, cell_line, cell_col),
      cell(state, line, col, cell_line, cell_col)}
@@ -75,12 +81,10 @@ defmodule GameOfLifeCore.StateAgent do
   new_state : the value of the cell (0 or 1)
   """
   def update_cell(cell_line, cell_col, new_cell) do
-    state = state()
-    {line, col} = dimensions()
+    {state, line, col} = state_and_dimensions()
 
     GameOfLifeCore.State.get(state, line, col, cell_line, cell_col)
     |> GameOfLifeCore.GolServer.update(new_cell)
-    |> IO.inspect()
     |> case do
       {:error} -> {:error}
       _ -> {:ok}
