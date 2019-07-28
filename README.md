@@ -16,6 +16,8 @@
 
 - ✅supprimer Application
 
+- 🔥faire un test affichant le temps mis par x iteration
+
 ## Notes
 
 le state est

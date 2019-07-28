@@ -5,7 +5,8 @@ defmodule PhxGameOfLifeWeb.RoomChannel do
   def join("room:" <> _room, _payload, socket) do
     # IO.puts("Connection to lobby done")
 
-    GameOfLifeCore.Runner.build_random_board(50, 50)
+    # GameOfLifeCore.Runner.build_random_board(50, 50)
+    GameOfLifeCore.Runner.build_random_board(100, 100)
 
     {:ok, socket}
   end
@@ -19,9 +20,9 @@ defmodule PhxGameOfLifeWeb.RoomChannel do
     # broadcast(socket, "new_msg", %{body: "coucoc le monde"})
 
     GameOfLifeCore.Runner.one_generation()
+    IO.puts("New step calculated")
     state = GameOfLifeCore.Runner.string_state()
-    IO.puts("New generation")
-    IO.puts(state)
+    IO.puts("State converted to string")
     push(socket, "one_step", %{body: state})
 
     {:noreply, socket}
