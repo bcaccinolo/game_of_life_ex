@@ -12,10 +12,9 @@
 
 - ✅StateAgent.to_s
 
-- 🔥Runner: avoir la méthode `one_generation`
-  - not finished : do the test
+- ✅Runner: avoir la méthode `one_generation`
 
-- supprimer Application
+- ✅supprimer Application
 
 ## Notes
 
