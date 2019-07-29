@@ -11,6 +11,7 @@ defmodule GameOfLifeCore.GolServer do
 
   # Client
   def state(:out_of_boundaries), do: 0
+  def state(nil), do: 0
   def state(pid), do: GenServer.call(pid, :state)
 
   def update(:out_of_boundaries, _state), do: {:error}

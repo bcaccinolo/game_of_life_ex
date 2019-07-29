@@ -19,7 +19,15 @@
 - ✅faire un test affichant le temps mis par x iteration
 
 - 🔥Performance optimisation
-  - 🔥StateAgent.environnement tout gérer en mode liste et non en matrice
+  - ✅StateAgent.environnement tout gérer en mode liste et non en matrice
+  - move the generation of the environment en the Task
+
+## Performance tracking
+
+- Board 100x100 : 7.2 sec
+- Board 100x100 : 6.0 sec > the code handles list and no more matrix
+
+
 
 ## Notes
 
@@ -67,4 +75,8 @@ Ready to run in production? Please [check our deployment guides](https://hexdocs
 1, 0, 0,
 1, 1, 0,
 1, 0, 0
+
+1, 0, 0, 1, 1, 0, 1, 0, 0
+
+
 

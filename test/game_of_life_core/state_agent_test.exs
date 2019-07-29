@@ -3,38 +3,61 @@ defmodule StateAgentTest do
   alias GameOfLifeCore.{GolServer, State, StateAgent, StateBuilder}
   require IEx
 
-  test "environment_and_cell_by_index" do
-    {[1, 0, 0, 1, 1, 0, 1, 0, 0] |> StateBuilder.build_genserver_state(), 3, 3}
-    |> StateAgent.start_link()
-
-    {res, pid} = StateAgent.environment_and_cell_by_index(0)
-    assert res == [0, 0, 0, 0, 1, 0, 0, 1, 1]
-    assert is_pid(pid)
-
-    {res, pid} = StateAgent.environment_and_cell_by_index(1)
-    assert res == [0, 0, 0, 1, 0, 0, 1, 1, 0]
-    assert is_pid(pid)
-
-    {res, _pid} = StateAgent.environment_and_cell_by_index(4)
-    assert res == [1, 0, 0, 1, 1, 0, 1, 0, 0]
-
-    {res, _pid} = StateAgent.environment_and_cell_by_index(5)
-    assert res == [0, 0, 0, 1, 0, 0, 0, 0, 0]
-  end
-
   test "environment_and_cell" do
     {[1, 0, 0, 1, 1, 0, 1, 0, 0] |> StateBuilder.build_genserver_state(), 3, 3}
     |> StateAgent.start_link()
 
-    {res, pid} = StateAgent.environment_and_cell(1, 1)
+    {state, line, col} = StateAgent.state_and_dimensions()
+
+    {res, pid} = StateAgent.environment_and_cell(state, line, col, 0)
     assert res == [0, 0, 0, 0, 1, 0, 0, 1, 1]
     assert is_pid(pid)
 
-    {res, _pid} = StateAgent.environment_and_cell(2, 2)
-    assert res == [1, 0, 0, 1, 1, 0, 1, 0, 0]
+    {res, _pid} = StateAgent.environment_and_cell(state, line, col, 2)
+    assert res == [0, 0, 0, 0, 0, 0, 1, 0, 0]
 
-    {res, _pid} = StateAgent.environment_and_cell(2, 3)
+    {res, _pid} = StateAgent.environment_and_cell(state, line, col, 5)
     assert res == [0, 0, 0, 1, 0, 0, 0, 0, 0]
+  end
+
+  test "environment" do
+    {[1, 0, 0, 1, 1, 0, 1, 0, 0] |> StateBuilder.build_genserver_state(), 3, 3}
+    |> StateAgent.start_link()
+
+    {state, line, col} = StateAgent.state_and_dimensions()
+
+    env = StateAgent.environment(state, line, col, 0)
+    assert env == [0, 0, 0, 0, 1, 0, 0, 1, 1]
+
+    env = StateAgent.environment(state, line, col, 2)
+    assert env == [0, 0, 0, 0, 0, 0, 1, 0, 0]
+
+    env = StateAgent.environment(state, line, col, 1)
+    assert env == [0, 0, 0, 1, 0, 0, 1, 1, 0]
+
+    # angle bas gauche
+    env = StateAgent.environment(state, line, col, 6)
+    assert env == [0, 1, 1, 0, 1, 0, 0, 0, 0]
+
+    # angle bas droit
+    env = StateAgent.environment(state, line, col, 8)
+    assert env == [1, 0, 0, 0, 0, 0, 0, 0, 0]
+
+    # bas bordure
+    env = StateAgent.environment(state, line, col, 7)
+    assert env == [1, 1, 0, 1, 0, 0, 0, 0, 0]
+
+    # côté gauche
+    env = StateAgent.environment(state, line, col, 3)
+    assert env == [0, 1, 0, 0, 1, 1, 0, 1, 0]
+
+    # coté droit
+    env = StateAgent.environment(state, line, col, 5)
+    assert env == [0, 0, 0, 1, 0, 0, 0, 0, 0]
+
+    # dans le milieu
+    env = StateAgent.environment(state, line, col, 4)
+    assert env == [1, 0, 0, 1, 1, 0, 1, 0, 0]
   end
 
   test "update_cell" do

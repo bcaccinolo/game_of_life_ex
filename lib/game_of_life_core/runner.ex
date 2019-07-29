@@ -14,10 +14,10 @@ defmodule GameOfLifeCore.Runner do
   It will create or remove cells.
   """
   def one_generation do
-    {line, col} = StateAgent.dimensions()
+    {state, line, col} = StateAgent.state_and_dimensions()
 
     0..(line * col - 1)
-    |> Enum.map(fn index -> StateAgent.environment_and_cell_by_index(index) end)
+    |> Enum.map(fn index -> StateAgent.environment_and_cell(state, line, col, index) end)
     |> Enum.map(fn {env, pid} -> Task.async(fn -> GolServer.calculate(pid, env) end) end)
     |> Enum.each(fn task -> Task.await(task) end)
   end
