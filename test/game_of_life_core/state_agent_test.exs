@@ -3,35 +3,40 @@ defmodule StateAgentTest do
   alias GameOfLifeCore.{GolServer, State, StateAgent, StateBuilder}
   require IEx
 
-  test "environment_and_cell" do
-    {[1, 0, 0, 1, 1, 0, 1, 0, 0] |> StateBuilder.build_genserver_state(), 3, 3}
-    |> StateAgent.start_link()
+  # test "environment_and_cell" do
+  #   {[1, 0, 0, 1, 1, 0, 1, 0, 0] |> StateBuilder.build_genserver_state(), 3, 3}
+  #   |> StateAgent.start_link()
 
-    {state, line, col} = StateAgent.state_and_dimensions()
+  #   state = [1, 0, 0, 1, 1, 0, 1, 0, 0]
+  #   line = col = 3
 
-    {res, pid} = StateAgent.environment_and_cell(state, line, col, 0)
-    assert res == [0, 0, 0, 0, 1, 0, 0, 1, 1]
-    assert is_pid(pid)
+  #   {res, pid} = StateAgent.environment_and_cell(state, line, col, 0)
+  #   assert res == [0, 0, 0, 0, 1, 0, 0, 1, 1]
+  #   assert is_pid(pid)
 
-    {res, _pid} = StateAgent.environment_and_cell(state, line, col, 2)
-    assert res == [0, 0, 0, 0, 0, 0, 1, 0, 0]
+  #   {res, _pid} = StateAgent.environment_and_cell(state, line, col, 2)
+  #   assert res == [0, 0, 0, 0, 0, 0, 1, 0, 0]
 
-    {res, _pid} = StateAgent.environment_and_cell(state, line, col, 5)
-    assert res == [0, 0, 0, 1, 0, 0, 0, 0, 0]
-  end
+  #   {res, _pid} = StateAgent.environment_and_cell(state, line, col, 5)
+  #   assert res == [0, 0, 0, 1, 0, 0, 0, 0, 0]
+  # end
 
   test "environment" do
     {[1, 0, 0, 1, 1, 0, 1, 0, 0] |> StateBuilder.build_genserver_state(), 3, 3}
     |> StateAgent.start_link()
 
-    {state, line, col} = StateAgent.state_and_dimensions()
+    state = [1, 0, 0, 1, 1, 0, 1, 0, 0]
+    line = col = 3
 
+    # angle haut gauche
     env = StateAgent.environment(state, line, col, 0)
     assert env == [0, 0, 0, 0, 1, 0, 0, 1, 1]
 
+    # angle haut droit
     env = StateAgent.environment(state, line, col, 2)
     assert env == [0, 0, 0, 0, 0, 0, 1, 0, 0]
 
+    # au milieu
     env = StateAgent.environment(state, line, col, 1)
     assert env == [0, 0, 0, 1, 0, 0, 1, 1, 0]
 
@@ -61,8 +66,8 @@ defmodule StateAgentTest do
   end
 
   test "update_cell" do
-      {[1, 0, 0, 1, 1, 0, 1, 0, 0] |> StateBuilder.build_genserver_state(), 3, 3}
-      |> StateAgent.start_link()
+    {[1, 0, 0, 1, 1, 0, 1, 0, 0] |> StateBuilder.build_genserver_state(), 3, 3}
+    |> StateAgent.start_link()
 
     # coordinates are out of scope
     {status} = StateAgent.update_cell(0, 1, 1)
@@ -81,18 +86,19 @@ defmodule StateAgentTest do
 
   test "state_values" do
     cell_values = [1, 0, 0, 1, 1, 0, 1, 0, 0]
+
     {cell_values |> StateBuilder.build_genserver_state(), 3, 3}
     |> StateAgent.start_link()
 
-    assert StateAgent.state_values == cell_values
+    assert StateAgent.state_values() == cell_values
   end
 
   test "to_s" do
     cell_values = [1, 0, 0, 1, 1, 0, 1, 0, 0]
+
     {cell_values |> StateBuilder.build_genserver_state(), 3, 3}
     |> StateAgent.start_link()
 
-    assert StateAgent.to_s == "100\n110\n100\n"
+    assert StateAgent.to_s() == "100\n110\n100\n"
   end
-
 end

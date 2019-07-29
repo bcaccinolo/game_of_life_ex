@@ -50,10 +50,16 @@ defmodule GameOfLifeCore.StateAgent do
 
   @doc """
   Get the state and the environment of the cell present at line and col.
+
+  Pararms
+  state: list of values
+  line, col: state's dimensions
+  index: position of the cell to generate environment for
+
   Example:
     (3, 8) -> {[1, 0, 1, 1, 1, 1, 1, 0, 1], cell_pid}
   """
-  def environment_and_cell(state, line, col, index) do
+  def environment_and_cell(state, line, col, index) do # NOT USED ANY LONGER 💥
     {
       environment(state, line, col, index),
       Enum.at(state, index)
@@ -64,7 +70,8 @@ defmodule GameOfLifeCore.StateAgent do
   Environment is the list of cells located around the cell at (cell_line, cell_col)
 
   Pararms
-  state: list of pids
+  state: list of values
+  line, col: state's dimensions
   index: position of the cell to generate environment for
 
   Retunr example: [0, 1, 1, 1, 0, 1, 0, 0, 1]
@@ -76,9 +83,10 @@ defmodule GameOfLifeCore.StateAgent do
       -1, index, index + 1,
       -1, index + col, index + col + 1
     ]
-    |> Enum.map(fn index -> state_at(state, index) end)
-    |> Enum.map(fn pid -> GameOfLifeCore.GolServer.state(pid) end)
+    |> Enum.map(fn index -> Enum.at(state, index) end)
   end
+
+
 
   # angle haut droit
   def environment(state, _line, col, index) when index == col - 1 do
@@ -87,8 +95,7 @@ defmodule GameOfLifeCore.StateAgent do
       index - 1, index, -1,
       index + col - 1, index + col, -1
     ]
-    |> Enum.map(fn index -> state_at(state, index) end)
-    |> Enum.map(fn pid -> GameOfLifeCore.GolServer.state(pid) end)
+    |> Enum.map(fn index -> Enum.at(state, index) end)
   end
 
   # haut bordure
@@ -98,8 +105,7 @@ defmodule GameOfLifeCore.StateAgent do
       index - 1, index, index + 1,
       index + col - 1, index + col, index + col + 1
     ]
-    |> Enum.map(fn index -> state_at(state, index) end)
-    |> Enum.map(fn pid -> GameOfLifeCore.GolServer.state(pid) end)
+    |> Enum.map(fn index -> Enum.at(state, index) end)
   end
 
   # angle bas gauche
@@ -109,8 +115,7 @@ defmodule GameOfLifeCore.StateAgent do
       -1, index, index + 1,
       -1, -1, -1
     ]
-    |> Enum.map(fn index -> state_at(state, index) end)
-    |> Enum.map(fn pid -> GameOfLifeCore.GolServer.state(pid) end)
+    |> Enum.map(fn index -> Enum.at(state, index) end)
   end
 
   # angle bas droit
@@ -120,8 +125,7 @@ defmodule GameOfLifeCore.StateAgent do
       index - 1, index, -1,
       -1, -1, -1
     ]
-    |> Enum.map(fn index -> state_at(state, index) end)
-    |> Enum.map(fn pid -> GameOfLifeCore.GolServer.state(pid) end)
+    |> Enum.map(fn index -> Enum.at(state, index) end)
   end
 
   # bas bordure
@@ -131,8 +135,7 @@ defmodule GameOfLifeCore.StateAgent do
       index - 1, index, index + 1,
       -1, -1, -1
     ]
-    |> Enum.map(fn index -> state_at(state, index) end)
-    |> Enum.map(fn pid -> GameOfLifeCore.GolServer.state(pid) end)
+    |> Enum.map(fn index -> Enum.at(state, index) end)
   end
 
   # côté gauche mais pas tout en haut ni tout en bas
@@ -142,8 +145,7 @@ defmodule GameOfLifeCore.StateAgent do
       -1, index, index + 1,
       -1, index + col, index + col + 1
     ]
-    |> Enum.map(fn index -> state_at(state, index) end)
-    |> Enum.map(fn pid -> GameOfLifeCore.GolServer.state(pid) end)
+    |> Enum.map(fn index -> Enum.at(state, index) end)
   end
 
   # côté droit mais pas tout en haut ni tout en bas
@@ -153,8 +155,7 @@ defmodule GameOfLifeCore.StateAgent do
       index - 1, index, -1,
       index + col - 1, index + col, -1
     ]
-    |> Enum.map(fn index -> state_at(state, index) end)
-    |> Enum.map(fn pid -> GameOfLifeCore.GolServer.state(pid) end)
+    |> Enum.map(fn index -> Enum.at(state, index) end)
   end
 
   # in the middle
@@ -164,8 +165,7 @@ defmodule GameOfLifeCore.StateAgent do
       index - 1, index, index + 1,
       index + col - 1, index + col, index + col + 1
     ]
-    |> Enum.map(fn index -> state_at(state, index) end)
-    |> Enum.map(fn pid -> GameOfLifeCore.GolServer.state(pid) end)
+    |> Enum.map(fn index -> Enum.at(state, index) end)
   end
 
   def cell(state, index) do

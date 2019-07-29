@@ -74,7 +74,7 @@ class Root extends React.Component {
 
   start(e) {
     e.preventDefault()
-    let loopId = setInterval(function(){ this.props.channel.push("one_step", {}) }.bind(this), 2000)
+    let loopId = setInterval(function(){ this.props.channel.push("one_step", {}) }.bind(this), 1000)
     this.setState({loopId: loopId})
   }
 

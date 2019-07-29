@@ -15,17 +15,24 @@ defmodule GameOfLifeCore.Runner do
   """
   def one_generation do
     {state, line, col} = StateAgent.state_and_dimensions()
+    state_values = StateAgent.state_values()
 
     0..(line * col - 1)
-    |> Enum.map(fn index -> StateAgent.environment_and_cell(state, line, col, index) end)
-    |> Enum.map(fn {env, pid} -> Task.async(fn -> GolServer.calculate(pid, env) end) end)
+    |> Enum.map(fn index ->
+      pid = Enum.at(state, index)
+      Task.async(fn -> do_it(pid, state_values, line, col, index) end) end)
     |> Enum.each(fn task -> Task.await(task) end)
+  end
+
+  def do_it(pid, state, line, col, index) do
+    env = StateAgent.environment(state, line, col, index)
+    GolServer.calculate(pid, env)
   end
 
   @doc """
   Return the board state in string format
   """
   def string_state do
-    StateAgent.to_s
+    StateAgent.to_s()
   end
 end
