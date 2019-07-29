@@ -16,9 +16,11 @@ defmodule RunnerTest do
     {cell_values |> StateBuilder.build_genserver_state(), 3, 3}
     |> StateAgent.start_link()
 
+    state = StateAgent.state()
+
     Runner.one_generation()
 
-    assert StateAgent.state_values() == expected
+    assert StateAgent.state_values(state) == expected
   end
 
   test "one_generation: 1 lonely cell" do
@@ -33,9 +35,11 @@ defmodule RunnerTest do
     {cell_values |> StateBuilder.build_genserver_state(), 3, 3}
     |> StateAgent.start_link()
 
+    state = StateAgent.state()
+
     Runner.one_generation()
 
-    assert StateAgent.state_values() == expected
+    assert StateAgent.state_values(state) == expected
   end
 
 
@@ -51,9 +55,11 @@ defmodule RunnerTest do
     {cell_values |> StateBuilder.build_genserver_state(), 3, 3}
     |> StateAgent.start_link()
 
+    state = StateAgent.state()
+
     Runner.one_generation()
 
-    assert StateAgent.state_values() == expected
+    assert StateAgent.state_values(state) == expected
   end
 
   test "one_generation: 3 cells together" do
@@ -68,9 +74,11 @@ defmodule RunnerTest do
     {cell_values |> StateBuilder.build_genserver_state(), 3, 3}
     |> StateAgent.start_link()
 
+    state = StateAgent.state()
+
     Runner.one_generation()
 
-    assert StateAgent.state_values() == expected
+    assert StateAgent.state_values(state) == expected
   end
 
   test "one_generation: 4 cells in square" do
@@ -85,9 +93,11 @@ defmodule RunnerTest do
     {cell_values |> StateBuilder.build_genserver_state(), 3, 3}
     |> StateAgent.start_link()
 
+    state = StateAgent.state()
+
     Runner.one_generation()
 
-    assert StateAgent.state_values() == expected
+    assert StateAgent.state_values(state) == expected
   end
 
   test "one_generation: 4 cells" do
@@ -102,9 +112,11 @@ defmodule RunnerTest do
     {cell_values |> StateBuilder.build_genserver_state(), 3, 3}
     |> StateAgent.start_link()
 
+    state = StateAgent.state()
+
     Runner.one_generation()
 
-    assert StateAgent.state_values() == expected
+    assert StateAgent.state_values(state) == expected
   end
 
   test "one_generation: 4 cells v2" do
@@ -119,9 +131,11 @@ defmodule RunnerTest do
     {cell_values |> StateBuilder.build_genserver_state(), 3, 3}
     |> StateAgent.start_link()
 
+    state = StateAgent.state()
+
     Runner.one_generation()
 
-    assert StateAgent.state_values() == expected
+    assert StateAgent.state_values(state) == expected
   end
 
 end

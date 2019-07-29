@@ -37,8 +37,8 @@ defmodule GameOfLifeCore.StateAgent do
   Retunr the values of the board state.
   Example: [0, 1, 1, 0 ...]
   """
-  def state_values do
-    state() |> Enum.map(fn pid -> GolServer.state(pid) end)
+  def state_values(state) do
+    state |> Enum.map(fn pid -> GolServer.state(pid) end)
   end
 
   @doc """
@@ -194,13 +194,13 @@ defmodule GameOfLifeCore.StateAgent do
   to string !
   Example: "100\n110\n100"
   """
-  def to_s do
+  def to_s(state) do
     {_line, col} = dimensions()
 
     # here I'm currying 'cell_value_to_s' cause I don't want to use the variable 'col' as a global var.
     cell_to_s = &cell_value_to_s(col, &1, &2)
 
-    state_values()
+    state_values(state)
     |> Enum.with_index()
     |> Enum.reduce("", fn {cell_state, index}, acc -> "#{acc}#{cell_to_s.(cell_state, index)}" end)
   end

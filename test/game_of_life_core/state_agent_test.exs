@@ -3,24 +3,6 @@ defmodule StateAgentTest do
   alias GameOfLifeCore.{GolServer, State, StateAgent, StateBuilder}
   require IEx
 
-  # test "environment_and_cell" do
-  #   {[1, 0, 0, 1, 1, 0, 1, 0, 0] |> StateBuilder.build_genserver_state(), 3, 3}
-  #   |> StateAgent.start_link()
-
-  #   state = [1, 0, 0, 1, 1, 0, 1, 0, 0]
-  #   line = col = 3
-
-  #   {res, pid} = StateAgent.environment_and_cell(state, line, col, 0)
-  #   assert res == [0, 0, 0, 0, 1, 0, 0, 1, 1]
-  #   assert is_pid(pid)
-
-  #   {res, _pid} = StateAgent.environment_and_cell(state, line, col, 2)
-  #   assert res == [0, 0, 0, 0, 0, 0, 1, 0, 0]
-
-  #   {res, _pid} = StateAgent.environment_and_cell(state, line, col, 5)
-  #   assert res == [0, 0, 0, 1, 0, 0, 0, 0, 0]
-  # end
-
   test "environment" do
     {[1, 0, 0, 1, 1, 0, 1, 0, 0] |> StateBuilder.build_genserver_state(), 3, 3}
     |> StateAgent.start_link()
@@ -90,7 +72,9 @@ defmodule StateAgentTest do
     {cell_values |> StateBuilder.build_genserver_state(), 3, 3}
     |> StateAgent.start_link()
 
-    assert StateAgent.state_values() == cell_values
+    state = StateAgent.state()
+
+    assert StateAgent.state_values(state) == cell_values
   end
 
   test "to_s" do
@@ -99,6 +83,8 @@ defmodule StateAgentTest do
     {cell_values |> StateBuilder.build_genserver_state(), 3, 3}
     |> StateAgent.start_link()
 
-    assert StateAgent.to_s() == "100\n110\n100\n"
+    state = StateAgent.state()
+
+    assert StateAgent.to_s(state) == "100\n110\n100\n"
   end
 end
