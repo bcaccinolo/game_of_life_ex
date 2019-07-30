@@ -25,9 +25,13 @@
       - stateAgent.environment prend un state de valeurs
   - ✅on ne fait qu'un appel a getState
   - 😿lancer 2 générations en // n'est pas possible...
+  - ✅NON - utiliser des Struct et non des Lists
+    Iteration de liste est plus rapide que itération de tuple.
+
+  - 🔥voir le code avec ncurses on dirait que ça fonctionnait mieux...
 
   - tracer ce que fait le code et voir ce qui prend le plus de temps
-  - voir le code avec ncurses on dirait que ça fonctionnait mieux...
+
 
 
 ## Performance tracking
