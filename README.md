@@ -20,16 +20,20 @@
 
 - 🔥Performance optimisation
   - ✅StateAgent.environnement tout gérer en mode liste et non en matrice
-  - move the generation of the environment en the Task
-    - 🔥on passe les valeurs du state et non les pids.
-      - ✅stateAgent.environment prend un state de valeurs
-      - 🔥on ne fait qu'un appel a getState
+  - ✅move the generation of the environment en the Task
+    - on passe les valeurs du state et non les pids.
+      - stateAgent.environment prend un state de valeurs
+  - ✅on ne fait qu'un appel a getState
+  - 😿lancer 2 générations en // n'est pas possible...
+
+  - tracer ce que fait le code et voir ce qui prend le plus de temps
+  - voir le code avec ncurses on dirait que ça fonctionnait mieux...
+
 
 ## Performance tracking
 
 - Board 100x100 : 7.2 sec
 - Board 100x100 : 6.0 sec > the code handles list and no more matrix
-- Board 100x100 : 2.1 sec > move the mode in tasks
 
 
 ## Notes
