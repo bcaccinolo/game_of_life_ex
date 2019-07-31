@@ -1,4 +1,4 @@
-defmodule GameOfLife2.GolServer do
+defmodule GameOfLifeCore.GolServer do
   @moduledoc """
   The server calculating the state of life for a given cell.
   """
@@ -35,7 +35,7 @@ defmodule GameOfLife2.GolServer do
   end
 
   def handle_call({:calculate, environment, line, col}, _from, _state) do
-    result = GameOfLife2.Gol.live_or_let_die(environment, line, col)
+    result = GameOfLifeCore.Gol.live_or_let_die(environment, line, col)
     {:reply, result, result}
   end
 

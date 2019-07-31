@@ -1,4 +1,4 @@
-defmodule GameOfLife2.Gol do
+defmodule GameOfLifeCore.Gol do
   @moduledoc """
   Implementation of the Game Of Life logic
   """
@@ -10,7 +10,7 @@ defmodule GameOfLife2.Gol do
   @doc false
   defmacro __using__(_opts) do
     quote do
-      import GameOfLife2.Gol
+      import GameOfLifeCore.Gol
     end
   end
 
@@ -71,9 +71,9 @@ defmodule GameOfLife2.Gol do
   Returns the sum.
   """
   def sumMatrix(matrix, result \\ 0)
-  def sumMatrix({a, b, c}, result) do sumMatrix({b, c}, result + GameOfLife2.Gol.sumList(Tuple.to_list(a))) end
-  def sumMatrix({a, b}, result) do sumMatrix({b}, result + GameOfLife2.Gol.sumList(Tuple.to_list(a))) end
-  def sumMatrix({a}, result) do result + GameOfLife2.Gol.sumList(Tuple.to_list(a)) end
+  def sumMatrix({a, b, c}, result) do sumMatrix({b, c}, result + GameOfLifeCore.Gol.sumList(Tuple.to_list(a))) end
+  def sumMatrix({a, b}, result) do sumMatrix({b}, result + GameOfLifeCore.Gol.sumList(Tuple.to_list(a))) end
+  def sumMatrix({a}, result) do result + GameOfLifeCore.Gol.sumList(Tuple.to_list(a)) end
   def sumMatrix({}, result) do result end
 
   @doc """

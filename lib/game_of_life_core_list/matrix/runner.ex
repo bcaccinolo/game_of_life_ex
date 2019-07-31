@@ -1,4 +1,4 @@
-defmodule GameOfLife2.Runner do
+defmodule GameOfLifeCore.Runner do
 
   def launch() do
 
@@ -10,11 +10,11 @@ defmodule GameOfLife2.Runner do
     cols = 100
     ExNcurses.curs_set(0) # no cursor
 
-    GameOfLife2.StateBuilder.random_state(lines - 1, cols - 1)
-    |> GameOfLife2.StateBuilder.build_state
-    |> GameOfLife2.StateAgent.start_link
+    GameOfLifeCore.StateBuilder.random_state(lines - 1, cols - 1)
+    |> GameOfLifeCore.StateBuilder.build_state
+    |> GameOfLifeCore.StateAgent.start_link
 
-    board = GameOfLife2.StateAgent.state
+    board = GameOfLifeCore.StateAgent.state
     line_count = board |> Tuple.to_list |> length
     col_count = board |> elem(0) |> Tuple.to_list |> length
 
@@ -24,7 +24,7 @@ defmodule GameOfLife2.Runner do
   def loop(line_count, col_count, generation \\ 0) do
     one_generation(line_count, col_count)
 
-    GameOfLife2.StateAgent.disp
+    GameOfLifeCore.StateAgent.disp
     # Process.sleep(10)
     loop(line_count, col_count, generation + 1)
   end
@@ -34,8 +34,8 @@ defmodule GameOfLife2.Runner do
   No display is done
   """
   def one_generation(line_count, col_count) do
-    GameOfLife2.StateAgent.cell_and_env_list(line_count - 1, col_count - 1)
-    |> Enum.map(fn({env, pid}) -> Task.async(fn() -> GameOfLife2.GolServer.calculate(pid, env) end) end)
+    GameOfLifeCore.StateAgent.cell_and_env_list(line_count - 1, col_count - 1)
+    |> Enum.map(fn({env, pid}) -> Task.async(fn() -> GameOfLifeCore.GolServer.calculate(pid, env) end) end)
     |> Enum.map(fn(task) -> Task.await(task) end)
   end
 

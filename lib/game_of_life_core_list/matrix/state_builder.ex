@@ -1,4 +1,4 @@
-defmodule GameOfLife2.StateBuilder do
+defmodule GameOfLifeCore.StateBuilder do
   use Agent
 
   @doc """
@@ -33,7 +33,7 @@ defmodule GameOfLife2.StateBuilder do
   Returns a GenServes pid.
   """
   def build_state_from_value(v) do
-    GameOfLife2.GolServer.start_link(v)
+    GameOfLifeCore.GolServer.start_link(v)
   end
 
   @doc """
