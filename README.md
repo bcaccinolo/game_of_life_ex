@@ -18,6 +18,8 @@
 
 - ✅faire un test affichant le temps mis par x iteration
 
+- 🔥we have 2 GameOfLifeCore versions, have an interface to easily switch from one to another
+
 - 🔥Performance optimisation
   - ✅StateAgent.environnement tout gérer en mode liste et non en matrice
   - ✅move the generation of the environment en the Task
