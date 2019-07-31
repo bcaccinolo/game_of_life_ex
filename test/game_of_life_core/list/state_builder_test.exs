@@ -2,7 +2,7 @@ defmodule StateBuilderTest do
   use ExUnit.Case
   doctest GameOfLifeCore
 
-  alias GameOfLifeCore.StateBuilder
+  alias GameOfLifeCore.List.StateBuilder
 
   require IEx
 

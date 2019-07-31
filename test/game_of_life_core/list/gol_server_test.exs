@@ -2,6 +2,8 @@ defmodule GolServerTest do
   use ExUnit.Case
   doctest GameOfLifeCore
 
+  alias GameOfLifeCore.List.GolServer
+
   test "state" do
      {:ok, pid} = GameOfLifeCore.GolServer.start_link(1)
      assert GameOfLifeCore.GolServer.state(pid) == 1

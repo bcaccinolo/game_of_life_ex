@@ -1,5 +1,7 @@
-defmodule GameOfLifeCore.StateBuilder do
+defmodule GameOfLifeCore.List.StateBuilder do
   use Agent
+
+  alias GameOfLifeCore.List.{GolServer}
 
   @doc """
   Generate a random state of GenServers.
@@ -38,7 +40,7 @@ defmodule GameOfLifeCore.StateBuilder do
   Returns a GenServer's pid
   """
   def genserver_from_value(v) do
-    {:ok, pid} = GameOfLifeCore.GolServer.start_link(v)
+    {:ok, pid} = GolServer.start_link(v)
     pid
   end
 end

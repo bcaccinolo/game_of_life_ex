@@ -1,7 +1,9 @@
-defmodule GameOfLifeCore.GolServer do
+defmodule GameOfLifeCore.Matrix.GolServer do
   @moduledoc """
   The server calculating the state of life for a given cell.
   """
+
+  alias GameOfLifeCore.Matrix.Gol
 
   use GenServer
 
@@ -10,12 +12,13 @@ defmodule GameOfLifeCore.GolServer do
   end
 
   # Client
-  def state(:out_of_boundaries), do: 0
-  def state(nil), do: 0
-  def state(pid), do: GenServer.call(pid, :state)
+  def state(pid) do
+    GenServer.call(pid, :state)
+  end
 
-  def update(:out_of_boundaries, _state), do: {:error}
-  def update(pid, state), do: GenServer.cast(pid, {:update, state})
+  def update(pid, state) do
+    GenServer.cast(pid, {:update, state})
+  end
 
   @doc """
   Do the game of life calculation for the cell and it stores the result in the state.
@@ -33,8 +36,8 @@ defmodule GameOfLifeCore.GolServer do
     {:reply, state, state}
   end
 
-  def handle_call({:calculate, environment, _line, _col}, _from, _state) do
-    result = GameOfLifeCore.Gol.live_or_let_die(environment)
+  def handle_call({:calculate, environment, line, col}, _from, _state) do
+    result = Gol.live_or_let_die(environment, line, col)
     {:reply, result, result}
   end
 

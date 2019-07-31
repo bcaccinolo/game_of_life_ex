@@ -2,7 +2,7 @@ defmodule RunnerTest do
   use ExUnit.Case
   doctest GameOfLifeCore
 
-  alias GameOfLifeCore.{ Runner, StateBuilder, StateAgent }
+  alias GameOfLifeCore.List.{ Runner, StateBuilder, StateAgent }
 
   test "one_generation: 3 cells in line rotates the line" do
     cell_values = [0, 1, 0,

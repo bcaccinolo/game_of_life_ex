@@ -1,5 +1,6 @@
-defmodule GameOfLifeCore.Runner do
-  alias GameOfLifeCore.{StateAgent, StateBuilder, GolServer}
+defmodule GameOfLifeCore.List.Runner do
+
+  alias GameOfLifeCore.List.{StateAgent, StateBuilder, GolServer}
 
   @doc """
   Build a random board and start the StateAgent server

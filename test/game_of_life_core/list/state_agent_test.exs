@@ -1,6 +1,6 @@
 defmodule StateAgentTest do
   use ExUnit.Case
-  alias GameOfLifeCore.{GolServer, State, StateAgent, StateBuilder}
+  alias GameOfLifeCore.List.{GolServer, State, StateAgent, StateBuilder}
   require IEx
 
   test "environment" do

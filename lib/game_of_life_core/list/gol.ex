@@ -1,4 +1,4 @@
-defmodule GameOfLifeCore.Gol do
+defmodule GameOfLifeCore.List.Gol do
   @moduledoc """
   Implementation of the Game Of Life logic
   """

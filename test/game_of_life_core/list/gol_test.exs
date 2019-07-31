@@ -1,6 +1,6 @@
 defmodule GolTest do
   use ExUnit.Case
-  alias GameOfLifeCore.Gol
+  alias GameOfLifeCore.List.Gol
   doctest GameOfLifeCore
 
   test "live_or_let_die(environment)" do

@@ -1,7 +1,9 @@
-defmodule GameOfLifeCore.Gol do
+defmodule GameOfLifeCore.Matrix.Gol do
   @moduledoc """
   Implementation of the Game Of Life logic
   """
+
+  alias GameOfLifeCore.Matrix.Gol
 
   # Callback invoked by `use`.
   #
@@ -71,9 +73,9 @@ defmodule GameOfLifeCore.Gol do
   Returns the sum.
   """
   def sumMatrix(matrix, result \\ 0)
-  def sumMatrix({a, b, c}, result) do sumMatrix({b, c}, result + GameOfLifeCore.Gol.sumList(Tuple.to_list(a))) end
-  def sumMatrix({a, b}, result) do sumMatrix({b}, result + GameOfLifeCore.Gol.sumList(Tuple.to_list(a))) end
-  def sumMatrix({a}, result) do result + GameOfLifeCore.Gol.sumList(Tuple.to_list(a)) end
+  def sumMatrix({a, b, c}, result) do sumMatrix({b, c}, result + Gol.sumList(Tuple.to_list(a))) end
+  def sumMatrix({a, b}, result) do sumMatrix({b}, result + Gol.sumList(Tuple.to_list(a))) end
+  def sumMatrix({a}, result) do result + Gol.sumList(Tuple.to_list(a)) end
   def sumMatrix({}, result) do result end
 
   @doc """

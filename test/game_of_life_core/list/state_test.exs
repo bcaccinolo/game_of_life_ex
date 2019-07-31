@@ -1,7 +1,7 @@
 defmodule StateTest do
   use ExUnit.Case
 
-  alias GameOfLifeCore.State
+  alias GameOfLifeCore.List.State
 
   doctest GameOfLifeCore
 

@@ -1,4 +1,4 @@
-defmodule GameOfLifeCore.State do
+defmodule GameOfLifeCore.List.State do
   @doc """
   Returns the element present at the given coordinates.
   Coordinates are passed cause we manipulate the list as a 2 dimensions matrix.

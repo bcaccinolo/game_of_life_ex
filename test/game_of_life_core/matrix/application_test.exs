@@ -2,7 +2,7 @@ defmodule ApplicationTest do
   use ExUnit.Case
   doctest GameOfLifeCore
 
-  alias GameOfLifeCore.Application
+  alias GameOfLifeCore.Matrix.Application
 
   test "one_generation performance" do
 

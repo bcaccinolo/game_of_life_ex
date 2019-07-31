@@ -1,7 +1,7 @@
-defmodule GameOfLifeCore.StateAgent do
+defmodule GameOfLifeCore.List.StateAgent do
   use Agent
 
-  alias GameOfLifeCore.{GolServer, State}
+  alias GameOfLifeCore.List.{GolServer, State}
 
   @doc """
   Start the Agent with a new state.
@@ -169,7 +169,7 @@ defmodule GameOfLifeCore.StateAgent do
   end
 
   def cell(state, index) do
-    Enum.at(state, index) |> GameOfLifeCore.GolServer.state()
+    Enum.at(state, index) |> GolServer.state()
   end
 
   @doc """
@@ -182,8 +182,8 @@ defmodule GameOfLifeCore.StateAgent do
   def update_cell(cell_line, cell_col, new_cell) do
     {state, line, col} = state_and_dimensions()
 
-    GameOfLifeCore.State.get(state, line, col, cell_line, cell_col)
-    |> GameOfLifeCore.GolServer.update(new_cell)
+    State.get(state, line, col, cell_line, cell_col)
+    |> GolServer.update(new_cell)
     |> case do
       {:error} -> {:error}
       _ -> {:ok}

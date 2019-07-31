@@ -1,5 +1,7 @@
-defmodule GameOfLifeCore.StateAgent do
+defmodule GameOfLifeCore.Matrix.StateAgent do
   use Agent
+
+  alias GameOfLifeCore.Matrix.{GolServer, StateAgent}
 
   def start_link(initial_value) do
     Agent.start_link(fn -> initial_value end, name: __MODULE__)
@@ -42,7 +44,7 @@ defmodule GameOfLifeCore.StateAgent do
   def extract(_board, _line_count, col_count, _line, col)  when col >= col_count , do: 0
   def extract(board, _line_count, _col_count, line, col) do
     elem(elem(board, line), col)
-    |> GameOfLifeCore.GolServer.state
+    |> GolServer.state
   end
 
   @doc """
@@ -59,9 +61,9 @@ defmodule GameOfLifeCore.StateAgent do
   Build a 'cell_and_environment' list just for one line of the matrix.
   """
   def cell_and_env_line_list(line, col)
-  def cell_and_env_line_list(line, 0) , do: [GameOfLifeCore.StateAgent.cell_and_environment(line, 0)]
+  def cell_and_env_line_list(line, 0) , do: [StateAgent.cell_and_environment(line, 0)]
   def cell_and_env_line_list(line, col) do
-    [GameOfLifeCore.StateAgent.cell_and_environment(line, col) | cell_and_env_line_list(line, col - 1)]
+    [StateAgent.cell_and_environment(line, col) | cell_and_env_line_list(line, col - 1)]
   end
 
   @doc """
@@ -74,7 +76,7 @@ defmodule GameOfLifeCore.StateAgent do
   def update_cell(line, col, new_cell) do
     board = Agent.get(__MODULE__, fn state -> state end)
     cell_server = elem(elem(board, line), col)
-    GameOfLifeCore.GolServer.update(cell_server, new_cell)
+    GolServer.update(cell_server, new_cell)
   end
 
   @doc """
@@ -103,7 +105,7 @@ defmodule GameOfLifeCore.StateAgent do
   def build_line(_board_line, 0) , do: ""
   def build_line(board_line, col_count) do
     cell = elem(board_line, col_count - 1)
-           |> GameOfLifeCore.GolServer.state
+           |> GolServer.state
            |> case do
              0 -> "."
              1 -> "+"

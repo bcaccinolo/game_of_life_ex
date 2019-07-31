@@ -1,5 +1,7 @@
-defmodule GameOfLifeCore.StateBuilder do
+defmodule GameOfLifeCore.Matrix.StateBuilder do
   use Agent
+
+  alias GameOfLifeCore.Matrix.GolServer
 
   @doc """
   Build the GenServer states from the cell values.
@@ -33,7 +35,7 @@ defmodule GameOfLifeCore.StateBuilder do
   Returns a GenServes pid.
   """
   def build_state_from_value(v) do
-    GameOfLifeCore.GolServer.start_link(v)
+    GolServer.start_link(v)
   end
 
   @doc """
