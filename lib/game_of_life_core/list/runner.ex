@@ -1,14 +1,16 @@
 defmodule GameOfLifeCore.List.Runner do
 
+  @behaviour Interfaces.Runner
+
   alias GameOfLifeCore.List.{StateAgent, StateBuilder, GolServer}
 
   @doc """
   Build a random board and start the StateAgent server
   """
-  def build_random_board(line, col) do
-    {state, line, col} = StateBuilder.random_state(line, col)
+  def build_random_board(lines, cols) do
+    {state, line, col} = StateBuilder.random_state(lines, cols)
     StateAgent.start_link({state, line, col})
-    state
+    {:ok}
   end
 
   @doc """

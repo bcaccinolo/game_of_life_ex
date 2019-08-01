@@ -1,34 +1,16 @@
 defmodule GameOfLifeCore.Matrix.Runner do
+  @behaviour Interfaces.Runner
 
   alias GameOfLifeCore.Matrix.{GolServer, StateBuilder, StateAgent}
 
-  def launch() do
-    # init NCurses
-    ExNcurses.initscr()
-    # lines = ExNcurses.lines
-    # cols = ExNcurses.cols
-    lines = 100
-    cols = 100
-    # no cursor
-    ExNcurses.curs_set(0)
-
-    StateBuilder.random_state(lines - 1, cols - 1)
+  @doc """
+  Build a random board and start the StateAgent server
+  """
+  def build_random_board(lines, cols) do
+    StateBuilder.random_state(lines, cols)
     |> StateBuilder.build_state()
     |> StateAgent.start_link()
-
-    board = StateAgent.state()
-    line_count = board |> Tuple.to_list() |> length
-    col_count = board |> elem(0) |> Tuple.to_list() |> length
-
-    loop(line_count, col_count)
-  end
-
-  def loop(line_count, col_count, generation \\ 0) do
-    one_generation(line_count, col_count)
-
-    StateAgent.disp()
-    # Process.sleep(10)
-    loop(line_count, col_count, generation + 1)
+    {:ok}
   end
 
   @doc """
@@ -41,8 +23,7 @@ defmodule GameOfLifeCore.Matrix.Runner do
       Task.async(fn -> GolServer.calculate(pid, env) end)
     end)
     |> Enum.map(fn task -> Task.await(task) end)
-  end
 
-  def to_s do
+    StateAgent.to_s()
   end
 end
