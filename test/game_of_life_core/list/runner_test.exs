@@ -1,4 +1,4 @@
-defmodule RunnerTest do
+defmodule GameOfLifeCore.List.RunnerTest do
   use ExUnit.Case
   doctest GameOfLifeCore
 

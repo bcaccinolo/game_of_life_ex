@@ -1,4 +1,4 @@
-defmodule StateTest do
+defmodule GameOfLifeCore.List.StateTest do
   use ExUnit.Case
 
   alias GameOfLifeCore.List.State

@@ -1,4 +1,4 @@
-defmodule StateAgentTest do
+defmodule GameOfLifeCore.List.StateAgentTest do
   use ExUnit.Case
   alias GameOfLifeCore.List.{GolServer, State, StateAgent, StateBuilder}
   require IEx

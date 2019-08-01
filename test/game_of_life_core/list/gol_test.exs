@@ -1,4 +1,4 @@
-defmodule GolTest do
+defmodule GameOfLifeCore.List.GolTest do
   use ExUnit.Case
   alias GameOfLifeCore.List.Gol
   doctest GameOfLifeCore

@@ -1,4 +1,4 @@
-defmodule GolServerTest do
+defmodule GameOfLifeCore.List.GolServerTest do
   use ExUnit.Case
   doctest GameOfLifeCore
 

@@ -1,4 +1,4 @@
-defmodule StateBuilderTest do
+defmodule GameOfLifeCore.List.StateBuilderTest do
   use ExUnit.Case
   doctest GameOfLifeCore
 
