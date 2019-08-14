@@ -17,7 +17,11 @@ defmodule GameOfLifeCore.Matrix.Runner do
   Do the calculation for one cell iteration.
   No display is done
   """
-  def one_generation(line_count, col_count) do
+  def one_generation do
+    board = StateAgent.state()
+    line_count = board |> Tuple.to_list |> length
+    col_count = board |> elem(0) |> Tuple.to_list |> length
+
     StateAgent.cell_and_env_list(line_count - 1, col_count - 1)
     |> Enum.map(fn {env, pid} ->
       Task.async(fn -> GolServer.calculate(pid, env) end)

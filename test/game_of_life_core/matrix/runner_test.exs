@@ -15,7 +15,7 @@ defmodule GameOfLifeCore.Matrix.RunnerTest do
     |> StateAgent.start_link
 
     bundle = fn ->
-      Runner.one_generation(lines, cols)
+      Runner.one_generation
     end
 
     {ms, _} = :timer.tc(bundle)

@@ -20,9 +20,8 @@
 
 - ✅fix tests
 
-- 🔥we have 2 GameOfLifeCore versions, have an interface to easily switch from one to another
+- ✅we have 2 GameOfLifeCore versions, have an interface to easily switch from one to another
   use Behaviour
-  - 🔥Modifier Matrix.one_generation(line, col)
 
 - Performance optimisation
   - ✅StateAgent.environnement tout gérer en mode liste et non en matrice
@@ -33,9 +32,7 @@
   - 😿lancer 2 générations en // n'est pas possible...
   - ✅NON - utiliser des Struct et non des Lists
     Iteration de liste est plus rapide que itération de tuple.
-
   - voir le code avec ncurses on dirait que ça fonctionnait mieux...
-
   - tracer ce que fait le code et voir ce qui prend le plus de temps
 
 
