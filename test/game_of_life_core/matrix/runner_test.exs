@@ -4,7 +4,6 @@ defmodule GameOfLifeCore.Matrix.RunnerTest do
 
   alias GameOfLifeCore.Matrix.{Runner, StateBuilder, StateAgent}
 
-
   test "one_generation performance" do
 
     lines = 100

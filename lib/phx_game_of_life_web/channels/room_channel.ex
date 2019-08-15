@@ -24,8 +24,6 @@ defmodule PhxGameOfLifeWeb.RoomChannel do
     string_state = gol_runner.one_generation()
     push(socket, "one_step", %{body: string_state})
 
-    IO.puts(string_state)
-
     {:noreply, socket}
   end
 
