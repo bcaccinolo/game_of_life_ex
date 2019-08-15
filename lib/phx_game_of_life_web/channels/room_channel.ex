@@ -3,10 +3,12 @@ defmodule PhxGameOfLifeWeb.RoomChannel do
 
   # handles the special `"lobby"` subtopic
   def join("room:" <> _room, _payload, socket) do
-    # IO.puts("Connection to lobby done")
+    IO.puts("Connection to lobby done")
 
-    GameOfLifeCore.Runner.build_random_board(50, 50)
-    # GameOfLifeCore.Runner.build_random_board(100, 100)
+    config = Application.get_env(:phx_game_of_life, __MODULE__, [])
+    gol_runner = config[:adapter]
+    # gol_runner.build_random_board(50, 50)
+    gol_runner.build_random_board(100, 100)
 
     {:ok, socket}
   end
@@ -15,14 +17,14 @@ defmodule PhxGameOfLifeWeb.RoomChannel do
   def handle_in("one_step", _payload, socket) do
     IO.puts("New step requested from client")
 
-    # push(socket, "new_msg", %{body: "coucoc le monde"})
-    # broadcast_from(socket, "new_msg", %{body: "coucoc le monde"})
-    # broadcast(socket, "new_msg", %{body: "coucoc le monde"})
+    config = Application.get_env(:phx_game_of_life, __MODULE__, [])
+    gol_runner = config[:adapter]
+    gol_runner.build_random_board(50, 50)
 
-    string_state = GameOfLifeCore.Runner.one_generation()
-    IO.puts("New step calculated")
-
+    string_state = gol_runner.one_generation()
     push(socket, "one_step", %{body: string_state})
+
+    IO.puts(string_state)
 
     {:noreply, socket}
   end

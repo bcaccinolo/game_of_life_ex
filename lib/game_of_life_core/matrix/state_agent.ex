@@ -119,10 +119,6 @@ defmodule GameOfLifeCore.Matrix.StateAgent do
   def build_line(board_line, col_count) do
     cell = elem(board_line, col_count - 1)
            |> GolServer.state
-           |> case do
-             0 -> "."
-             1 -> "+"
-           end
     "#{build_line(board_line, col_count - 1)}#{cell}"
   end
 
