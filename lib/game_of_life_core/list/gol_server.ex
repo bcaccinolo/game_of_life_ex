@@ -16,9 +16,6 @@ defmodule GameOfLifeCore.List.GolServer do
   def state(nil), do: 0
   def state(pid), do: GenServer.call(pid, :state)
 
-  def update(:out_of_boundaries, _state), do: {:error}
-  def update(pid, state), do: GenServer.cast(pid, {:update, state})
-
   @doc """
   Do the game of life calculation for the cell and it stores the result in the state.
   """
@@ -38,10 +35,6 @@ defmodule GameOfLifeCore.List.GolServer do
   def handle_call({:calculate, environment, _line, _col}, _from, _state) do
     result = Gol.live_or_let_die(environment)
     {:reply, result, result}
-  end
-
-  def handle_cast({:update, new_state}, _state) do
-    {:noreply, new_state}
   end
 
 end

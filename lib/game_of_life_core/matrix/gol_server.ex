@@ -16,10 +16,6 @@ defmodule GameOfLifeCore.Matrix.GolServer do
     GenServer.call(pid, :state)
   end
 
-  def update(pid, state) do
-    GenServer.cast(pid, {:update, state})
-  end
-
   @doc """
   Do the game of life calculation for the cell and it stores the result in the state.
   """
@@ -41,8 +37,10 @@ defmodule GameOfLifeCore.Matrix.GolServer do
     {:reply, result, result}
   end
 
-  def handle_cast({:update, new_state}, _state) do
-    {:noreply, new_state}
+  def handle_cast({:calculate, environment, line, col}, _state) do
+    result = Gol.live_or_let_die(environment, line, col)
+
+    {:no_reply, result}
   end
 
 end

@@ -173,24 +173,6 @@ defmodule GameOfLifeCore.List.StateAgent do
   end
 
   @doc """
-  Update one cell
-
-  Params
-  cell_line, cell_col : coordinates of the cell in the board
-  new_state : the value of the cell (0 or 1)
-  """
-  def update_cell(cell_line, cell_col, new_cell) do
-    {state, line, col} = state_and_dimensions()
-
-    State.get(state, line, col, cell_line, cell_col)
-    |> GolServer.update(new_cell)
-    |> case do
-      {:error} -> {:error}
-      _ -> {:ok}
-    end
-  end
-
-  @doc """
   to string !
   Example: "100\n110\n100"
   """

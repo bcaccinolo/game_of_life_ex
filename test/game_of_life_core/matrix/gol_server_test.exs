@@ -12,14 +12,6 @@ defmodule GameOfLifeCore.Matrix.GolServerTest do
      assert GolServer.state(pid) == 0
   end
 
-  test "update" do
-     {:ok, pid} = GolServer.start_link(1)
-     assert GolServer.state(pid) == 1
-
-     GolServer.update(pid, 0)
-     assert GolServer.state(pid) == 0
-  end
-
   test "calculate" do
      {:ok, pid} = GolServer.start_link(0)
 

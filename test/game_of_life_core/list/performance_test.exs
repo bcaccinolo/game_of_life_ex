@@ -1,7 +1,7 @@
 defmodule GameOfLifeCore.List.PerformanceTest do
   use ExUnit.Case
 
-  alias GameOfLifeCore.List.Runner
+  # alias GameOfLifeCore.List.Runner
 
   # test "performance" do
   #   bundle = fn ->

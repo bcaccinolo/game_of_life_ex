@@ -67,19 +67,6 @@ defmodule GameOfLifeCore.Matrix.StateAgent do
   end
 
   @doc """
-  Update one cell
-
-  Params
-  line, col : coordinates of the cell in the board
-  new_state : the value of the cell (0 or 1)
-  """
-  def update_cell(line, col, new_cell) do
-    board = Agent.get(__MODULE__, fn state -> state end)
-    cell_server = elem(elem(board, line), col)
-    GolServer.update(cell_server, new_cell)
-  end
-
-  @doc """
   NCURSE Display the board
   """
   def ncurse_disp do

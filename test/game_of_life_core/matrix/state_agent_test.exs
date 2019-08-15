@@ -100,21 +100,6 @@ defmodule GameOfLifeCore.Matrix.StateAgentTest do
     assert length(res) == 12
   end
 
-  test "update_cell" do
-    [[1, 0, 0],
-     [1, 1, 0],
-     [1, 0, 0]]
-    |> StateBuilder.build_state
-    |> StateAgent.start_link
-
-    StateAgent.update_cell(0, 1, 1)
-
-    {res, _pid} = StateAgent.cell_and_environment(1, 1)
-    assert res == {{1, 1, 0},
-                   {1, 1, 0},
-                   {1, 0, 0}}
-  end
-
   test "build_line" do
     [[1, 0, 0],
     [1, 1, 0],
@@ -125,7 +110,7 @@ defmodule GameOfLifeCore.Matrix.StateAgentTest do
    state = StateAgent.state
    state_line = elem(state, 1)
    res = StateAgent.build_line(state_line, 3)
-   assert res == "++."
+   assert res == "110"
   end
 
 end

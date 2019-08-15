@@ -1,6 +1,6 @@
 defmodule GameOfLifeCore.List.StateAgentTest do
   use ExUnit.Case
-  alias GameOfLifeCore.List.{GolServer, State, StateAgent, StateBuilder}
+  alias GameOfLifeCore.List.{StateAgent, StateBuilder}
   require IEx
 
   test "environment" do
@@ -45,25 +45,6 @@ defmodule GameOfLifeCore.List.StateAgentTest do
     # dans le milieu
     env = StateAgent.environment(state, line, col, 4)
     assert env == [1, 0, 0, 1, 1, 0, 1, 0, 0]
-  end
-
-  test "update_cell" do
-    {[1, 0, 0, 1, 1, 0, 1, 0, 0] |> StateBuilder.build_genserver_state(), 3, 3}
-    |> StateAgent.start_link()
-
-    # coordinates are out of scope
-    {status} = StateAgent.update_cell(0, 1, 1)
-    assert status == :error
-
-    # coordinates are in the scope
-    {status} = StateAgent.update_cell(2, 2, 42)
-    assert status == :ok
-
-    # validate the value has been saved
-    {state, line, col} = StateAgent.state_and_dimensions()
-
-    cell = State.get(state, line, col, 2, 2) |> GolServer.state()
-    assert cell == 42
   end
 
   test "state_values" do
