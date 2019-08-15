@@ -1,9 +1,9 @@
-defmodule GameOfLifeCore.Matrix.GolServer do
+defmodule GameOfLifeCore.Matrix2.GolServer do
   @moduledoc """
   The server calculating the state of life for a given cell.
   """
 
-  alias GameOfLifeCore.Matrix.Gol
+  alias GameOfLifeCore.Matrix2.Gol
 
   use GenServer
 

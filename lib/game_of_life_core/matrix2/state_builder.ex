@@ -1,7 +1,7 @@
-defmodule GameOfLifeCore.Matrix.StateBuilder do
+defmodule GameOfLifeCore.Matrix2.StateBuilder do
   use Agent
 
-  alias GameOfLifeCore.Matrix.GolServer
+  alias GameOfLifeCore.Matrix2.GolServer
 
   @doc """
   Build the GenServer states from the cell values.

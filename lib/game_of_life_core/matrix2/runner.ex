@@ -1,7 +1,7 @@
-defmodule GameOfLifeCore.Matrix.Runner do
+defmodule GameOfLifeCore.Matrix2.Runner do
   @behaviour Interfaces.Runner
 
-  alias GameOfLifeCore.Matrix.{GolServer, StateBuilder, StateAgent}
+  alias GameOfLifeCore.Matrix2.{GolServer, StateBuilder, StateAgent}
 
   @doc """
   Build a random board and start the StateAgent server
@@ -34,7 +34,7 @@ defmodule GameOfLifeCore.Matrix.Runner do
     #   StateAgent.cell_and_env_list(board, line_count - 1, col_count - 1)
     # end
     # {ms, _} = :timer.tc(bundle)
-    # IO.puts("Matrix #{ms / 1_000_000} sec")
+    # IO.puts("Matrix2 #{ms / 1_000_000} sec")
 
     StateAgent.cell_and_env_list(board, line_count - 1, col_count - 1)
     |> Enum.map(fn {env, pid} -> GolServer.calculate(pid, env) end)

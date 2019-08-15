@@ -1,9 +1,9 @@
-defmodule GameOfLifeCore.Matrix.Gol do
+defmodule GameOfLifeCore.Matrix2.Gol do
   @moduledoc """
   Implementation of the Game Of Life logic
   """
 
-  alias GameOfLifeCore.Matrix.Gol
+  alias GameOfLifeCore.Matrix2.Gol
 
   # Callback invoked by `use`.
   #
@@ -64,10 +64,10 @@ defmodule GameOfLifeCore.Matrix.Gol do
   end
 
   @doc """
-  Sum the content of a Matrix made of tuples.
+  Sum the content of a Matrix2 made of tuples.
 
   ## Params
-    - matrix: the list to sum.
+    - Matrix2: the list to sum.
     - result: the accumulator.
 
   Returns the sum.
