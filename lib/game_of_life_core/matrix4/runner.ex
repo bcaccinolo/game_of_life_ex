@@ -26,12 +26,10 @@ defmodule GameOfLifeCore.Matrix4.Runner do
     line_count = board |> Tuple.to_list() |> length
     col_count = board |> elem(0) |> Tuple.to_list() |> length
 
-    Enum.flat_map(0..(line_count - 1), fn line ->
-      Enum.map(0..(col_count - 1), fn col ->
+    for line <- (0..(line_count - 1)), col <- (0..(col_count - 1)) do
         {env, pid} = { StateAgent.cell_and_environment(board_values, line_count, col_count, line, col) , elem(elem(board, line), col) }
         GolServer.calculate(pid, env)
-      end)
-    end)
+    end
 
     StateAgent.to_s()
   end
