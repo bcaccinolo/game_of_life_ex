@@ -37,7 +37,10 @@ defmodule GameOfLifeCore.Matrix2.Runner do
     # IO.puts("Matrix2 #{ms / 1_000_000} sec")
 
     StateAgent.cell_and_env_list(board, line_count - 1, col_count - 1)
-    |> Enum.map(fn {env, pid} -> GolServer.calculate(pid, env) end)
+    |> Enum.map(fn {env, pid} ->
+      Task.async(fn -> GolServer.calculate(pid, env) end)
+    end)
+    |> Enum.map(fn task -> Task.await(task) end)
 
     StateAgent.to_s()
   end
