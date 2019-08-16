@@ -6,8 +6,8 @@ defmodule GameOfLifeCore.Matrix3.RunnerTest do
 
   test "one_generation performance" do
 
-    lines = 100
-    cols = 100
+    config = Application.get_env(:phx_game_of_life, PhxGameOfLifeWeb.RoomChannel, [])
+    lines = cols = config[:runner_test_dimension]
 
     StateBuilder.random_state(lines, cols)
     |> StateBuilder.build_state
