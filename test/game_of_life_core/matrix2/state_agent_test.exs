@@ -23,7 +23,7 @@ defmodule GameOfLifeCore.Matrix2.StateAgentTest do
     |> StateBuilder.build_state
     |> StateAgent.start_link
 
-    board = StateAgent.state
+    board = StateAgent.state()
 
     {res, _pid} = StateAgent.cell_and_environment(board, 0, 1)
     assert res == {{0, 0, 0},
@@ -53,7 +53,7 @@ defmodule GameOfLifeCore.Matrix2.StateAgentTest do
     |> StateBuilder.build_state
     |> StateAgent.start_link
 
-    board = StateAgent.state
+    board = StateAgent.state()
 
     {res, _pid} = StateAgent.cell_and_environment(board, 0, 0)
     assert res == {{0, 0, 0},
@@ -68,7 +68,7 @@ defmodule GameOfLifeCore.Matrix2.StateAgentTest do
     |> StateBuilder.build_state
     |> StateAgent.start_link
 
-    board = StateAgent.state
+    board = StateAgent.state()
 
     {res, _pid} = StateAgent.cell_and_environment(board, 2, 3)
     assert res == {{0, 1, 1},
@@ -83,7 +83,7 @@ defmodule GameOfLifeCore.Matrix2.StateAgentTest do
     |> StateBuilder.build_state
     |> StateAgent.start_link
 
-    board = StateAgent.state
+    board = StateAgent.state()
     line_count = board |> Tuple.to_list |> length
     col_count = board |> elem(0) |> Tuple.to_list |> length
 
@@ -98,7 +98,7 @@ defmodule GameOfLifeCore.Matrix2.StateAgentTest do
     |> StateBuilder.build_state
     |> StateAgent.start_link
 
-    board = StateAgent.state
+    board = StateAgent.state()
     line_count = board |> Tuple.to_list |> length
     col_count = board |> elem(0) |> Tuple.to_list |> length
 
@@ -113,7 +113,7 @@ defmodule GameOfLifeCore.Matrix2.StateAgentTest do
    |> StateBuilder.build_state
    |> StateAgent.start_link
 
-   state = StateAgent.state
+   state = StateAgent.state()
    state_line = elem(state, 1)
    res = StateAgent.build_line(state_line, 3)
    assert res == "110"

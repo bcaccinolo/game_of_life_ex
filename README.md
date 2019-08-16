@@ -40,9 +40,14 @@ data.split('\n').forEach((line, y) => {
   - voir le code avec ncurses on dirait que ça fonctionnait mieux...
   - tracer ce que fait le code et voir ce qui prend le plus de temps
 
-- 🔥new version: no Task, just use GenServers
+- 😿new version: no Task, just use GenServers
+    NOT possible rigth now cause GenServer is not async
 
-- new version: move the environment calculation in the GenServer
+- ✅Matrix2: passing the board everytime it's required
+
+- ✅Matrix3: new version: move the environment calculation in the GenServer
+
+- 🔥Matrix4: no //
 
 - new version: have a non-parallelized version
 
