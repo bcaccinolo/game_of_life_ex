@@ -24,11 +24,11 @@ defmodule GameOfLifeCore.List.Runner do
     state_values = StateAgent.state_values(state)
 
     0..(line * col - 1)
-    |> Stream.map(fn index ->
+    |> Enum.map(fn index ->
       pid = Enum.at(state, index)
       Task.async(fn -> one_generation_cell(pid, state_values, line, col, index) end)
     end)
-    |> Enum.map(fn task -> Task.await(task) end)
+    |> Enum.each(fn task -> Task.await(task) end)
 
     StateAgent.to_s(state)
   end

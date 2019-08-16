@@ -1,8 +1,8 @@
-defmodule GameOfLifeCore.List.RunnerTest do
+defmodule GameOfLifeCore.Matrix4.RunnerTest do
   use ExUnit.Case
   doctest GameOfLifeCore
 
-  alias GameOfLifeCore.Matrix.{Runner, StateBuilder, StateAgent}
+  alias GameOfLifeCore.Matrix4.{Runner, StateBuilder, StateAgent}
 
   test "one_generation performance" do
 
@@ -19,7 +19,7 @@ defmodule GameOfLifeCore.List.RunnerTest do
 
     {ms, _} = :timer.tc(bundle)
 
-    IO.puts("List #{ms / 1_000_000} sec")
-
+    IO.puts("Matrix4 #{ms / 1_000_000} sec")
   end
+
 end
