@@ -1,6 +1,5 @@
 # PhxGameOfLife
 
-
 ## Possible JS
 ```
 var canvas = document.getElementById("gol");
@@ -49,8 +48,19 @@ data.split('\n').forEach((line, y) => {
 
 - 🔥Matrix4: no //
 
-- new version: have a non-parallelized version
+- try another GameOfLife project in Elixir
 
+## Strucute
+
+- List version. The data structure is list
+
+- Matrix same version but using tuple of tuple
+
+- Matrix2: passing the board everytime it's required
+
+- Matrix3: move the environment calculation in the GenServer
+
+- Matrix4: no //
 
 ## Performance tracking
 

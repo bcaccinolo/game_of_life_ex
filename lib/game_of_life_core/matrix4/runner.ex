@@ -28,13 +28,10 @@ defmodule GameOfLifeCore.Matrix4.Runner do
 
     Enum.flat_map(0..(line_count - 1), fn line ->
       Enum.map(0..(col_count - 1), fn col ->
-        Task.async(fn ->
-          {env, pid} = { StateAgent.cell_and_environment(board_values, line_count, col_count, line, col) , elem(elem(board, line), col) }
-          GolServer.calculate(pid, env)
-        end)
+        {env, pid} = { StateAgent.cell_and_environment(board_values, line_count, col_count, line, col) , elem(elem(board, line), col) }
+        GolServer.calculate(pid, env)
       end)
     end)
-    |> Enum.map(fn task -> Task.await(task) end)
 
     StateAgent.to_s()
   end
