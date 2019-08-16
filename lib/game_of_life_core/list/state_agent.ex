@@ -1,7 +1,7 @@
 defmodule GameOfLifeCore.List.StateAgent do
   use Agent
 
-  alias GameOfLifeCore.List.{GolServer, State}
+  alias GameOfLifeCore.List.{GolServer}
 
   @doc """
   Start the Agent with a new state.

@@ -1,7 +1,7 @@
 defmodule GameOfLifeCore.Matrix4.StateAgent do
   use Agent
 
-  alias GameOfLifeCore.Matrix4.{GolServer, StateAgent}
+  alias GameOfLifeCore.Matrix4.{GolServer}
 
   def start_link(initial_value) do
     Agent.start_link(fn -> initial_value end, name: __MODULE__)
@@ -50,25 +50,6 @@ defmodule GameOfLifeCore.Matrix4.StateAgent do
   def extract(board, _line_count, _col_count, line, col) do
     elem(elem(board, line), col)
     # |> GolServer.state
-  end
-
-  @doc """
-  Build a 'cell_and_environment' list.
-  It's done this way cause Elixir likes to manage list instead of Matrix4.
-  """
-  def cell_and_env_list(board, line, col)
-  def cell_and_env_list(board, 0, col) , do: cell_and_env_line_list(board, 0, col)
-  def cell_and_env_list(board, line, col) do
-    cell_and_env_line_list(board, line, col) ++ cell_and_env_list(board, line - 1, col)
-  end
-
-  @doc """
-  Build a 'cell_and_environment' list just for one line of the Matrix4.
-  """
-  def cell_and_env_line_list(board, line, col)
-  def cell_and_env_line_list(board, line, 0) , do: [StateAgent.cell_and_environment(board, line, 0)]
-  def cell_and_env_line_list(board, line, col) do
-    [StateAgent.cell_and_environment(board, line, col) | cell_and_env_line_list(board, line, col - 1)]
   end
 
   @doc """

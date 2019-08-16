@@ -10,7 +10,7 @@ use Mix.Config
 # Configures which GameOfLifeCore to use
 config :phx_game_of_life, PhxGameOfLifeWeb.RoomChannel,
   adapter: GameOfLifeCore.Matrix3.Runner,
-  runner_test_dimension: 500
+  runner_test_dimension: 100
 
 
 # Configures the endpoint

@@ -1,7 +1,7 @@
 defmodule GameOfLifeCore.Matrix3.StateAgent do
   use Agent
 
-  alias GameOfLifeCore.Matrix3.{GolServer, StateAgent}
+  alias GameOfLifeCore.Matrix3.{GolServer}
 
   def start_link(initial_value) do
     Agent.start_link(fn -> initial_value end, name: __MODULE__)
