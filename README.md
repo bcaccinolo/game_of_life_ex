@@ -1,60 +1,75 @@
-# GameOfLife2
+# PhxGameOfLife
 
-## Run
 
-mix ; mix run -e "GameOfLife2.Application.launch"
+## Possible JS
+```
+var canvas = document.getElementById("gol");
+var ctx = canvas.getContext("2d");
 
-## TODO
-### Current problem
-
-- ✅create the module implementing the Game Of Life logic
-- ✅the GenServer keeps a simple state of the cell.
-- ✅the GenServer is able to take an environment and x & y
-    - to calculate the new state for the cell
-    - update the new state
-- ✅create state builder.
-- ✅create the agent keeping the state
-    from (1,1) it returns a matrix 3x3, the environment
-- ✅the Agent can update the board state. This should be useless normaly.
-- ✅randomly generate a state
-- ✅iterate over the state to display the state
-- ✅validate the coordinate of the matrix are consistently used.
-- ✅problem when the dimensions are too big
-- 🎉 It works !!! 🍾
-
-# NOTES
-
-- 📝the state of one cell will be the GenSenver containing as a state the value of the cell
-
-- 📝the Board state will be a GenServer containing the cell state.
-  the elements in the state will be accessed with: `elem(elem(state, 1), 1)`
-  this state is stored in an Agent.
-
-- 📝Coordinates in the matrix
-
-    [[1, 2, 3],
-     [4, 5, 6],
-     [7, 8, 9]]
-
-    x = 0 y = 0 > 1
-    x = 0 y = 1 > 2
-    x = 1 y = 0 > 4
-    x = 1 y = 1 > 5
-
-## Installation
-
-If [available in Hex](https://hex.pm/docs/publish), the package can be installed
-by adding `game_of_life_2` to your list of dependencies in `mix.exs`:
-
-```elixir
-def deps do
-  [
-    {:game_of_life_2, "~> 0.1.0"}
-  ]
-end
+data.split('\n').forEach((line, y) => {
+  Array.from(line).forEach((cell, x) => {
+    ctx.fillStyle = !!parseInt(cell) ? "#000" : "#fff";
+    ctx.fillRect((x-1)*10, (y-1)*10, 10, 10);
+  })
+})
 ```
 
-Documentation can be generated with [ExDoc](https://github.com/elixir-lang/ex_doc)
-and published on [HexDocs](https://hexdocs.pm). Once published, the docs can
-be found at [https://hexdocs.pm/game_of_life_2](https://hexdocs.pm/game_of_life_2).
+## todo
 
+- ✅modifier la structure du board, il faut que les dimensions soient stockées
+- ✅mettre en place le module State qui permet de manipuler un state se trouvant sous forme de liste.
+- ✅avancer sur StateAgent.cell_and_environment(line, col)
+- ✅StateAgent: récupérer tout le state {state, line, col}
+- ✅StateAgent.to_s
+- ✅Runner: avoir la méthode `one_generation`
+- ✅supprimer Application
+- ✅faire un test affichant le temps mis par x iteration
+- ✅fix tests
+- ✅we have 2 GameOfLifeCore versions, have an interface to easily switch from one to another
+  use Behaviour
+
+- Performance optimisation
+  - ✅StateAgent.environnement tout gérer en mode liste et non en matrice
+  - ✅move the generation of the environment en the Task
+    - on passe les valeurs du state et non les pids.
+      - stateAgent.environment prend un state de valeurs
+  - ✅on ne fait qu'un appel a getState
+  - 😿lancer 2 générations en // n'est pas possible...
+  - ✅NON - utiliser des Struct et non des Lists
+    Iteration de liste est plus rapide que itération de tuple.
+  - voir le code avec ncurses on dirait que ça fonctionnait mieux...
+  - tracer ce que fait le code et voir ce qui prend le plus de temps
+
+- 😿new version: no Task, just use GenServers
+    NOT possible rigth now cause GenServer is not async
+
+- ✅Matrix2: passing the board everytime it's required
+
+- ✅Matrix3: new version: move the environment calculation in the GenServer
+
+- 🔥Matrix4: no //
+
+- new version: have a non-parallelized version
+
+
+## Performance tracking
+
+- Board 100x100 : 7.2 sec
+- Board 100x100 : 6.0 sec > the code handles list and no more matrix
+
+## Notes
+
+le state est
+{ list, lines, columns }
+
+## start the server
+
+To start your Phoenix server:
+
+  * Install dependencies with `mix deps.get`
+  * Install Node.js dependencies with `cd assets && npm install`
+  * Start Phoenix endpoint with `mix phx.server`
+
+Now you can visit [`localhost:4000`](http://localhost:4000) from your browser.
+
+Ready to run in production? Please [check our deployment guides](https://hexdocs.pm/phoenix/deployment.html).
