@@ -15,42 +15,11 @@ data.split('\n').forEach((line, y) => {
 
 ## todo
 
-- ✅modifier la structure du board, il faut que les dimensions soient stockées
-- ✅mettre en place le module State qui permet de manipuler un state se trouvant sous forme de liste.
-- ✅avancer sur StateAgent.cell_and_environment(line, col)
-- ✅StateAgent: récupérer tout le state {state, line, col}
-- ✅StateAgent.to_s
-- ✅Runner: avoir la méthode `one_generation`
-- ✅supprimer Application
-- ✅faire un test affichant le temps mis par x iteration
-- ✅fix tests
-- ✅we have 2 GameOfLifeCore versions, have an interface to easily switch from one to another
-  use Behaviour
-
-- Performance optimisation
-  - ✅StateAgent.environnement tout gérer en mode liste et non en matrice
-  - ✅move the generation of the environment en the Task
-    - on passe les valeurs du state et non les pids.
-      - stateAgent.environment prend un state de valeurs
-  - ✅on ne fait qu'un appel a getState
-  - 😿lancer 2 générations en // n'est pas possible...
-  - ✅NON - utiliser des Struct et non des Lists
-    Iteration de liste est plus rapide que itération de tuple.
-  - voir le code avec ncurses on dirait que ça fonctionnait mieux...
-  - tracer ce que fait le code et voir ce qui prend le plus de temps
-
-- 😿new version: no Task, just use GenServers
-    NOT possible rigth now cause GenServer is not async
-
-- ✅Matrix2: passing the board everytime it's required
-
-- ✅Matrix3: new version: move the environment calculation in the GenServer
-
 - 🔥Matrix4: no //
 
 - try another GameOfLife project in Elixir
 
-## Strucute
+## Structure
 
 - List version. The data structure is list
 

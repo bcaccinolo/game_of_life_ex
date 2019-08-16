@@ -67,21 +67,6 @@ defmodule GameOfLifeCore.Matrix.StateAgent do
   end
 
   @doc """
-  NCURSE Display the board
-  """
-  def ncurse_disp do
-    board = Agent.get(__MODULE__, fn state -> state end)
-    line_count = board |> Tuple.to_list |> length
-    col_count = board |> elem(0) |> Tuple.to_list |> length
-
-    for line <- 0..(line_count - 1) do
-      cells_line = build_line(elem(board, line), col_count)
-      ExNcurses.mvprintw(line, 0, cells_line)
-      ExNcurses.refresh()
-    end
-  end
-
-  @doc """
   Build a String representation of the board.
 
   Example: "100\n110\n100"
