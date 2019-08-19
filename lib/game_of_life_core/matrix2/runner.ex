@@ -24,18 +24,6 @@ defmodule GameOfLifeCore.Matrix2.Runner do
     line_count = board |> Tuple.to_list |> length
     col_count = board |> elem(0) |> Tuple.to_list |> length
 
-    # (0..line_count - 1) |> Enum.each(fn line ->
-    #   (0..col_count - 1) |> Enum.each(fn col ->
-    #     # IO.puts("#{line} - #{col}")
-    #   end)
-    # end)
-
-    # bundle = fn ->
-    #   StateAgent.cell_and_env_list(board, line_count - 1, col_count - 1)
-    # end
-    # {ms, _} = :timer.tc(bundle)
-    # IO.puts("Matrix2 #{ms / 1_000_000} sec")
-
     StateAgent.cell_and_env_list(board, line_count - 1, col_count - 1)
     |> Enum.map(fn {env, pid} ->
       Task.async(fn -> GolServer.calculate(pid, env) end)

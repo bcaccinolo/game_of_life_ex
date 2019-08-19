@@ -22,6 +22,7 @@ defmodule PhxGameOfLifeWeb.RoomChannel do
     gol_runner.build_random_board(50, 50)
 
     string_state = gol_runner.one_generation()
+    IO.puts("pushing new generation")
     push(socket, "one_step", %{body: string_state})
 
     {:noreply, socket}

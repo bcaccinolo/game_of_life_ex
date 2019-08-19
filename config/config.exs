@@ -9,7 +9,7 @@ use Mix.Config
 
 # Configures which GameOfLifeCore to use
 config :phx_game_of_life, PhxGameOfLifeWeb.RoomChannel,
-  adapter: GameOfLifeCore.Matrix3.Runner,
+  adapter: GameOfLifeCore.Matrix4.Runner,
   runner_test_dimension: 100
 
 
