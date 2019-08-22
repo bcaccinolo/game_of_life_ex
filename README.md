@@ -25,7 +25,10 @@ A board 100x100 will require 10.000 GenServers which begins to be interesting.
 
 To calculate one new generation, the same algorithm is used for every cell:
   - gathering of cell's values around it. The result is called the `environment`
+  ![](./docs/algo_extract.png)
+
   - sending the environment to the GenServer in charge of the Game of Life calculation
+  ![](./docs/algo_genserver.png)
 
 Based on this algorithm, I've used different strategies to make the generation calcultation faster.
 
