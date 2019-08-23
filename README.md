@@ -93,6 +93,17 @@ Version 5 can be summed-up like this:
 | Matrix 2      | 0.440 |
 | Matrix 3      | 1.566 |
 | Matrix 4      | 0.071 |
+| Matrix 5      | 0.350 |
+
+## Unanswered questions
+
+- Why the `sequential` version is faster than the others using `parallelism`?
+
+- Can I do the `async` calls directly with the GenServer without having to use `Task`?
+
+## Todo
+
+- [ ] try a version without using `Task.async`. Matrix 5
 
 ## Run test
 
