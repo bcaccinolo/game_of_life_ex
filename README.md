@@ -103,7 +103,8 @@ Version 5 can be summed-up like this:
 
 ## Todo
 
-- [ ] try a version without using `Task.async`. Matrix 5
+- [X] try a version without using `Task.async`. Matrix 5
+- [] Matrix 6: le GenServer connait les pids de ses voisins
 
 ## Run test
 
