@@ -32,11 +32,6 @@ defmodule GameOfLifeCore.Matrix5.GolServer do
     {:reply, state, state}
   end
 
-  def handle_call({:calculate, environment, line, col}, _from, _state) do
-    result = Gol.live_or_let_die(environment, line, col)
-    {:reply, result, result}
-  end
-
   def handle_cast({:calculate, environment, line, col, caller}, _state) do
     result = Gol.live_or_let_die(environment, line, col)
     send caller, {:ok, self()}

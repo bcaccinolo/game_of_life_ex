@@ -104,8 +104,8 @@ Version 5 can be summed-up like this:
 ## Todo
 
 - [X] try a version without using `Task.async`. Matrix 5
-- [🔥] Matrix 6: le GenServer connait les pids de ses voisins
-    - update gol_server
+- [🔥] add the sleep in the Gol module
+
 ## Run test
 
 `mix test`
