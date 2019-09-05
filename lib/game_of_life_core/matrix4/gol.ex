@@ -34,10 +34,10 @@ defmodule GameOfLifeCore.Matrix4.Gol do
   Proxy doing the Game of life calculation.
   It's useful to do this to use `guards`.
   """
-  def calculate(n, _) when n == 3 , do: 1
-  def calculate(n, v) when n == 2 , do: v
-  def calculate(n, _) when n > 3  , do: 0
-  def calculate(n, _) when n < 2  , do: 0
+  def calculate(n, _) when n == 3, do: 1
+  def calculate(n, v) when n == 2, do: v
+  def calculate(n, _) when n > 3, do: 0
+  def calculate(n, _) when n < 2, do: 0
 
   @doc """
   Calculate the amount of living cells around the observed point.
@@ -62,10 +62,22 @@ defmodule GameOfLifeCore.Matrix4.Gol do
   Returns the sum.
   """
   def sumMatrix(matrix, result \\ 0)
-  def sumMatrix({a, b, c}, result) do sumMatrix({b, c}, result + Gol.sumList(Tuple.to_list(a))) end
-  def sumMatrix({a, b}, result) do sumMatrix({b}, result + Gol.sumList(Tuple.to_list(a))) end
-  def sumMatrix({a}, result) do result + Gol.sumList(Tuple.to_list(a)) end
-  def sumMatrix({}, result) do result end
+
+  def sumMatrix({a, b, c}, result) do
+    sumMatrix({b, c}, result + Gol.sumList(Tuple.to_list(a)))
+  end
+
+  def sumMatrix({a, b}, result) do
+    sumMatrix({b}, result + Gol.sumList(Tuple.to_list(a)))
+  end
+
+  def sumMatrix({a}, result) do
+    result + Gol.sumList(Tuple.to_list(a))
+  end
+
+  def sumMatrix({}, result) do
+    result
+  end
 
   @doc """
   Sum all the elem of a list.
@@ -77,8 +89,12 @@ defmodule GameOfLifeCore.Matrix4.Gol do
   Returns the sum.
   """
   def sumList(list, result \\ 0)
-  def sumList([hd | tl], result) do sumList(tl, result + hd) end
-  def sumList([], result)        do result end
 
+  def sumList([hd | tl], result) do
+    sumList(tl, result + hd)
+  end
+
+  def sumList([], result) do
+    result
+  end
 end
-

@@ -105,6 +105,9 @@ Version 5 can be summed-up like this:
 
 - [X] try a version without using `Task.async`. Matrix 5
 - [🔥] add the sleep in the Gol module
+        - ✅create a branch for this
+        - extract the Gol module if common to all versions
+        - add sleep
 
 ## Run test
 
