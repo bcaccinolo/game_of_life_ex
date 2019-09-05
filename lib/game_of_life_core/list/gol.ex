@@ -19,10 +19,10 @@ defmodule GameOfLifeCore.List.Gol do
   Proxy doing the Game of life calculation.
   It's useful to do this to use `guards`.
   """
-  def calculate(n, _) when n == 3 , do: 1
-  def calculate(n, v) when n == 2 , do: v
-  def calculate(n, _) when n > 3  , do: 0
-  def calculate(n, _) when n < 2  , do: 0
+  def calculate(n, _) when n == 3, do: 1
+  def calculate(n, v) when n == 2, do: v
+  def calculate(n, _) when n > 3, do: 0
+  def calculate(n, _) when n < 2, do: 0
 
   @doc """
   Calculate the amount of living cells around the observed point.
@@ -43,8 +43,6 @@ defmodule GameOfLifeCore.List.Gol do
   Returns the sum.
   """
   def sumMatrix(list) do
-    Enum.reduce(list, 0, fn (v, acc) -> acc + v end)
+    Enum.reduce(list, 0, fn v, acc -> acc + v end)
   end
-
 end
-

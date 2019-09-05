@@ -3,7 +3,7 @@ defmodule GameOfLifeCore.Matrix4.GolServer do
   The server calculating the state of life for a given cell.
   """
 
-  alias GameOfLifeCore.Matrix4.Gol
+  alias GameOfLifeCore.Matrix.Gol
 
   use GenServer
 
